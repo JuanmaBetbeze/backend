@@ -1,0 +1,3 @@
+[submodule "FrontEnd/proyecto-app"]
+	path = FrontEnd/proyecto-app
+	url = https://github.com/JuanmaBetbeze/proyecto-app.git
