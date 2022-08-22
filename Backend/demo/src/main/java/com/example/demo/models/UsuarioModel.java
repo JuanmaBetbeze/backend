@@ -4,43 +4,34 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class UsuarioModel {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  private String nombre;
-  private String email;
-  private Integer prioridad;
+public class UsuarioModel extends EntidadPersistente{
 
-  public Long getId () {
-    return id;
+  public String user;
+  public String password;
+  @Enumerated
+  public CategoriaUsuario categoria;
+
+  public String getUser () {
+    return user;
   }
 
-  public void setId (Long id) {
-    this.id = id;
+  public void setUser (String user) {
+    this.user = user;
   }
 
-  public String getNombre () {
-    return nombre;
+  public String getPassword () {
+    return password;
   }
 
-  public void setNombre (String nombre) {
-    this.nombre = nombre;
+  public void setPassword (String password) {
+    this.password = password;
   }
 
-  public String getEmail () {
-    return email;
+  public CategoriaUsuario getCategoria () {
+    return categoria;
   }
 
-  public void setEmail (String email) {
-    this.email = email;
-  }
-
-  public Integer getPrioridad () {
-    return prioridad;
-  }
-
-  public void setPrioridad (Integer prioridad) {
-    this.prioridad = prioridad;
+  public void setCategoria (CategoriaUsuario categoria) {
+    this.categoria = categoria;
   }
 }
