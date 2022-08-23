@@ -3,22 +3,36 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListarComponent } from './Usuario/listar/listar.component';
-import { AddComponent } from './Usuario/add/add.component';
-import { EditComponent } from './Usuario/edit/edit.component';
+import { ListarComponent } from './Components/Usuario/listar/listar.component';
+import { AddComponent } from './Components/Usuario/add/add.component';
+import { EditComponent } from './Components/Usuario/edit/edit.component';
+import { HomeComponent } from './Components/home/home.component';
+
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+
+// Providers
+import { JwtHelperService, JWT_OPTIONS }  from '@auth0/angular-jwt'
+import {TokenInterceptorService} from "./Service/token-interceptor.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     ListarComponent,
     AddComponent,
-    EditComponent
+    EditComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
+    // Token interceptor
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
