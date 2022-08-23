@@ -1,4 +1,6 @@
-package com.example.demo.models;
+package com.example.demo.models.Empleado;
+
+import com.example.demo.models.EntidadPersistente;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;

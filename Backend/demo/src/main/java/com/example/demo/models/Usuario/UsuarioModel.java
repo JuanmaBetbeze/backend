@@ -1,10 +1,12 @@
-package com.example.demo.models;
+package com.example.demo.models.Usuario;
+
+import com.example.demo.models.EntidadPersistente;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class UsuarioModel extends EntidadPersistente{
+public class UsuarioModel extends EntidadPersistente {
 
   public String user;
   public String password;
