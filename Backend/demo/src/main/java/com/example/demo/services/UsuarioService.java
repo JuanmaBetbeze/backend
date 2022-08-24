@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.models.Usuario.UsuarioModel;
 import com.example.demo.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +19,12 @@ public class UsuarioService {
   public UsuarioModel guardarUsuario(UsuarioModel usuario){
     return usuarioRepository.save(usuario);
   }
-  public Boolean verificar(UsuarioModel usuario){
-   return this.obtenerUsuarios().stream().anyMatch(usuarios-> Objects.equals(usuarios.getUser(), usuario.getUser()));
+  public ResponseEntity<?> verificar(UsuarioModel usuario){
+      UsuarioModel user=usuarioRepository.findByuser(usuario.getUser());
+   if(user.getPassword().equals(usuario.getPassword())){
+     return ResponseEntity.ok(usuario);
+   }
+   return ((ResponseEntity<?>) ResponseEntity.internalServerError());
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "./Service/auth.service";
-import {Usuario} from "./Model/Usuario";
+import {UsuarioModel} from "./Model/UsuarioModel";
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,8 @@ import {Usuario} from "./Model/Usuario";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'proyecto-app';
-  user:Usuario;
-  username:String;
-  pass:String;
+
+
   constructor(private router:Router,private authService:AuthService) {
   }
   Listar(){
@@ -24,16 +22,5 @@ export class AppComponent {
   Home(){
     this.router.navigate(["home"]);
   }
-  Validar(){
-    /*this.user.usuario="juanma";
-    this.user.contrasenia=this.pass;
-    this.user.categoria=0;
-    this.authService.singin(this.user).subscribe((result)=>{
-      if (result){
-        this.router.navigate(["home"]);
-      }
-        }
-    );
-     */
-}
+
 }

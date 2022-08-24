@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {UsuarioModel} from "../../../Model/UsuarioModel";
+import {AuthService} from "../../../Service/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-listar',
@@ -6,10 +9,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./listar.component.css']
 })
 export class ListarComponent implements OnInit {
+usuarios:UsuarioModel[];
+  constructor(private service:AuthService,private router:Router) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.service.getUsuarios().subscribe(resultado=>{
+      this.usuarios=resultado;
+    })
   }
 
 }

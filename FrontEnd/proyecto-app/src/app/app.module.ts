@@ -14,6 +14,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 // Providers
 import { JwtHelperService, JWT_OPTIONS }  from '@auth0/angular-jwt'
 import {TokenInterceptorService} from "./Service/token-interceptor.service";
+import { LoginComponent } from './Components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {TokenInterceptorService} from "./Service/token-interceptor.service";
     ListarComponent,
     AddComponent,
     EditComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -6,9 +6,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class UsuarioModel extends EntidadPersistente {
-
+public class UsuarioModel {
+  @Id
   public String user;
+  @Column
   public String password;
   @Enumerated
   public CategoriaUsuario categoria;

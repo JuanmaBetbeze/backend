@@ -2,7 +2,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {Usuario} from "../Model/Usuario";
+import {UsuarioModel} from "../Model/UsuarioModel";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -15,11 +16,11 @@ export class AuthService {
         private jwtHelper: JwtHelperService) { }
 
     getUsuarios(){
-        return this.http.get<Usuario[]>(this.URL);
+        return this.http.get<UsuarioModel[]>(this.URL);
     }
 
-    singin(user:Usuario){
-        return this.http.post<Usuario>(this.URL,user);
+    singin(user:UsuarioModel){
+        return this.http.post<UsuarioModel>(this.URL+'/login',user);
     }
 
     isAuth():boolean{

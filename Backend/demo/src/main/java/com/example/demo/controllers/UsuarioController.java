@@ -4,6 +4,7 @@ import com.example.demo.models.Usuario.CategoriaUsuario;
 import com.example.demo.models.Usuario.UsuarioModel;
 import com.example.demo.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,14 +28,11 @@ public class UsuarioController {
   }
 
    */
-  /*
-  @GetMapping()
-  public Boolean verificarUsuario(@RequestBody UsuarioModel usuario){
-    UsuarioModel usu=new UsuarioModel();
-    usu.setUser("juanma");
-    usu.setPassword("1234");
-    usu.setCategoria(CategoriaUsuario.ADMIN);
-    return usuarioService.verificar(usu);
+
+  @PostMapping("/login")
+  public ResponseEntity<?> verificarUsuario(@RequestBody UsuarioModel usuario){
+    System.out.println(usuario);
+    return usuarioService.verificar(usuario);
   }
-  */
+
 }
