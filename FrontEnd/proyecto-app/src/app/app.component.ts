@@ -10,9 +10,9 @@ import {Usuario} from "./Model/Usuario";
 })
 export class AppComponent {
   title = 'proyecto-app';
-  pass:String;
+  user:Usuario;
   username:String;
-
+  pass:String;
   constructor(private router:Router,private authService:AuthService) {
   }
   Listar(){
@@ -25,7 +25,15 @@ export class AppComponent {
     this.router.navigate(["home"]);
   }
   Validar(){
-    return this.authService.getUsuarios();
-
-  }
+    /*this.user.usuario="juanma";
+    this.user.contrasenia=this.pass;
+    this.user.categoria=0;
+    this.authService.singin(this.user).subscribe((result)=>{
+      if (result){
+        this.router.navigate(["home"]);
+      }
+        }
+    );
+     */
+}
 }

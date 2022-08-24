@@ -5,17 +5,21 @@ import com.example.demo.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UsuarioService {
   @Autowired
   UsuarioRepository usuarioRepository;
-  public ArrayList<UsuarioModel> obtenerUsuarios(){
-    return (ArrayList<UsuarioModel>) usuarioRepository.findAll();
+  public List<UsuarioModel> obtenerUsuarios(){
+    return (List<UsuarioModel>) usuarioRepository.findAll();
   }
   public UsuarioModel guardarUsuario(UsuarioModel usuario){
     return usuarioRepository.save(usuario);
+  }
+  public Boolean verificar(UsuarioModel usuario){
+   return this.obtenerUsuarios().stream().anyMatch(usuarios-> Objects.equals(usuarios.getUser(), usuario.getUser()));
   }
 
 }

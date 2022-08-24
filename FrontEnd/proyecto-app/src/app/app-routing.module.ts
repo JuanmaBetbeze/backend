@@ -10,8 +10,8 @@ const routes: Routes = [
   {path:'listar',component:ListarComponent},
   {path:'add',component:AddComponent, canActivate: [AuthGuard] },
   {path:'edit',component:EditComponent, canActivate: [AuthGuard] },
-  {path:'home',component:HomeComponent, canActivate: [RoleGuard], data: { expectedRole: 'admin' } },
-  { path: '**', pathMatch: 'full', redirectTo: 'home' }
+  {path:'home',component:HomeComponent},
+  //{ path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
 @NgModule({

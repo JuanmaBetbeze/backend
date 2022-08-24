@@ -1,6 +1,8 @@
 export class Usuario{
-    id:number;
-    usuario:String;
-    contraseña:String;
-    categoria:number;
+    private id:number;
+    private usuario:String;
+    private contrasenia:String;
+    private categoria:number;
+
+
 }

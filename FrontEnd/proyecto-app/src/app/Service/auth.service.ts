@@ -9,7 +9,7 @@ import {Usuario} from "../Model/Usuario";
 })
 export class AuthService {
 
-    private URL = 'http://localhost:3306';
+    private URL = 'http://localhost:8080/usuario';
     constructor(
         private http: HttpClient,
         private jwtHelper: JwtHelperService) { }
@@ -18,8 +18,8 @@ export class AuthService {
         return this.http.get<Usuario[]>(this.URL);
     }
 
-    singin(user:any){
-        return this.http.post(`${this.URL}/usuario`,user);
+    singin(user:Usuario){
+        return this.http.post<Usuario>(this.URL,user);
     }
 
     isAuth():boolean{
