@@ -11,6 +11,9 @@ import {Observable} from "rxjs";
 export class AuthService {
 
     private URL = 'http://localhost:8080/usuario';
+    authAdmin:boolean=false;
+    authEditor:boolean=false;
+    authObserver:boolean=false;
     constructor(
         private http: HttpClient,
         private jwtHelper: JwtHelperService) { }
@@ -23,12 +26,23 @@ export class AuthService {
         return this.http.post<UsuarioModel>(this.URL+'/login',user);
     }
 
-    isAuth():boolean{
-        const token = localStorage.getItem('token');
-        // @ts-ignore
-        if(this.jwtHelper.isTokenExpired(token) || !localStorage.getItem('token')){
-            return false;
-        }
-        return true;
+    isAuthAdmin():boolean{
+        return this.authAdmin;
     }
+    isAuthEditor():boolean{
+        return this.authEditor;
+    }
+    isAuthObserver():boolean{
+        return this.authObserver;
+    }
+    AdminAuth():void{
+        this.authAdmin=true;
+    }
+    EditorAuth():void{
+        this.authEditor=true;
+    }
+    ObserverAuth():void{
+        this.authObserver=true;
+    }
+
 }

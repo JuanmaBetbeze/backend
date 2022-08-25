@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     console.log(this.usuario)
     this.authService.singin(this.usuario).subscribe((result)=>{
       alert("Login success")
+      this.authService.ObserverAuth();
       this.router.navigate(["listar"])
     },error => alert("Usuario o contraseña incorrecta")    );
 

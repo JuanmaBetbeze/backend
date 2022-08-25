@@ -1,4 +1,6 @@
+/*
 package com.example.demo.models.Usuario;
+
 
 import com.example.demo.models.EntidadPersistente;
 
@@ -38,3 +40,4 @@ public class UsuarioModel {
     this.categoria = categoria;
   }
 }
+*/

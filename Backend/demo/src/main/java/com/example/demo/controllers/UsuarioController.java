@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+/* package com.example.demo.controllers;
 
 import com.example.demo.models.Usuario.CategoriaUsuario;
 import com.example.demo.models.Usuario.UsuarioModel;
@@ -27,7 +27,7 @@ public class UsuarioController {
     return this.usuarioService.guardarUsuario(usuario);
   }
 
-   */
+
 
   @PostMapping("/login")
   public ResponseEntity<?> verificarUsuario(@RequestBody UsuarioModel usuario){
@@ -36,3 +36,5 @@ public class UsuarioController {
   }
 
 }
+
+   */
