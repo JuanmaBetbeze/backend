@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListaProductoComponent } from './producto/lista-producto.component';
-import { DetalleProductoComponent } from './producto/detalle-producto.component';
-import { NuevoProductoComponent } from './producto/nuevo-producto.component';
-import { EditarProductoComponent } from './producto/editar-producto.component';
+import { ListaProductoComponent } from './Usuario/Listar/lista-producto.component';
+import { DetalleProductoComponent } from './Usuario/detalle-producto.component';
+import { NuevoProductoComponent } from './Usuario/Nuevo/nuevo-producto.component';
+import { EditarProductoComponent } from './Usuario/Eliminar/editar-producto.component';
 import { interceptorProvider } from './interceptors/prod-interceptor.service';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -15,8 +15,8 @@ import { FormsModule } from '@angular/forms';
 // external
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { LoginComponent } from './auth/login.component';
-import { RegistroComponent } from './auth/registro.component';
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './RegistrarUsuarios/registro.component';
 import { MenuComponent } from './menu/menu.component';
 import { IndexComponent } from './index/index.component';
 

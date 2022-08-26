@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
 
@@ -46,7 +46,7 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/nuevo")
+    @PostMapping("/auth/usuario/nuevo")
     public ResponseEntity<?> nuevo(@Valid
             @RequestBody NuevoUsuario nuevoUsuario,
             BindingResult bindingResult){
@@ -69,7 +69,7 @@ public class AuthController {
         return new ResponseEntity<>(new Mensaje("Usuario agregado con exito"),HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return new ResponseEntity( new Mensaje("campos mal puestos"), HttpStatus.BAD_REQUEST);
@@ -81,6 +81,11 @@ public class AuthController {
         UserDetails userDetails= (UserDetails) authentication.getPrincipal();
         JwtDto jwtDto= new JwtDto(jwt,userDetails.getUsername(),userDetails.getAuthorities());
         return new ResponseEntity(jwtDto,HttpStatus.OK);
+    }
+    @GetMapping("/usuario")
+    public ResponseEntity<List<Usuario>> listarUsuarios(){
+        List<Usuario> list = usuarioService.listarUsuarios();
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 
 }

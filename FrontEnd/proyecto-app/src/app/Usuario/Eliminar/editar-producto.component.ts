@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Producto } from '../models/producto';
-import { ProductoService } from '../service/producto.service';
+import { Producto } from '../../models/producto';
+import { UsuarioService } from '../../service/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,7 +14,7 @@ export class EditarProductoComponent implements OnInit {
   producto: Producto = null;
 
   constructor(
-    private productoService: ProductoService,
+    private productoService: UsuarioService,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private router: Router

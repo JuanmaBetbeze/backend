@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductoService } from '../service/producto.service';
-import { Producto } from '../models/producto';
+import { UsuarioService } from '../../service/usuario.service';
+import { Producto } from '../../models/producto';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,7 @@ export class NuevoProductoComponent implements OnInit {
   precio: number = null;
 
   constructor(
-    private productoService: ProductoService,
+    private productoService: UsuarioService,
     private toastr: ToastrService,
     private router: Router
     ) { }

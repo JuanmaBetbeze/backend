@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Producto } from '../models/producto';
-import { ProductoService } from '../service/producto.service';
+import { Producto } from '../../models/producto';
+import { UsuarioService } from '../../service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { TokenService } from '../service/token.service';
+import { TokenService } from '../../service/token.service';
+import {NuevoUsuario} from "../../models/nuevo-usuario";
 
 @Component({
   selector: 'app-lista-producto',
@@ -11,30 +12,30 @@ import { TokenService } from '../service/token.service';
 })
 export class ListaProductoComponent implements OnInit {
 
-  productos: Producto[] = [];
+  usuarios: NuevoUsuario[] = [];
   roles: string[];
   isAdmin = false;
 
   constructor(
-    private productoService: ProductoService,
+    private productoService: UsuarioService,
     private toastr: ToastrService,
     private tokenService: TokenService
   ) { }
 
   ngOnInit() {
-    this.cargarProductos();
+    this.cargarUsuarios();
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach(rol => {
-      if (rol === 'ROLE_ADMIN') {
+      if (rol === 'ADMIN') {
         this.isAdmin = true;
       }
     });
   }
 
-  cargarProductos(): void {
-    this.productoService.lista().subscribe(
+  cargarUsuarios(): void {
+    this.productoService.listarUsuarios().subscribe(
       data => {
-        this.productos = data;
+        this.usuarios = data;
       },
       err => {
         console.log(err);
@@ -48,7 +49,7 @@ export class ListaProductoComponent implements OnInit {
         this.toastr.success('Producto Eliminado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        this.cargarProductos();
+        this.cargarUsuarios();
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {
