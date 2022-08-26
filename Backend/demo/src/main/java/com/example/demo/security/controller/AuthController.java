@@ -1,5 +1,6 @@
 package com.example.demo.security.controller;
 
+import com.example.demo.security.Mensaje;
 import com.example.demo.security.dto.JwtDto;
 import com.example.demo.security.dto.LoginUsuario;
 import com.example.demo.security.dto.NuevoUsuario;
@@ -50,10 +51,10 @@ public class AuthController {
             @RequestBody NuevoUsuario nuevoUsuario,
             BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return new ResponseEntity( "campos mal puestos", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>( new Mensaje("campos mal puestos"), HttpStatus.BAD_REQUEST);
         }
         if (usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
-            return new ResponseEntity("Ese nombre ya existe",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("Ese nombre ya existe"),HttpStatus.BAD_REQUEST);
         Usuario usuario =
                 new Usuario(nuevoUsuario.getNombreUsuario(),passwordEncoder.encode(nuevoUsuario.getPassword()));
         Set<Rol> roles =new HashSet<>();
@@ -65,13 +66,13 @@ public class AuthController {
             roles.add(rolService.getByRolNombre(RolNombre.OBSERVER).get());
         usuario.setRoles(roles);
         usuarioService.save(usuario);
-        return new ResponseEntity("Usuario agregado con exito",HttpStatus.CREATED);
+        return new ResponseEntity<>(new Mensaje("Usuario agregado con exito"),HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtDto> login(@RequestBody LoginUsuario loginUsuario,BindingResult bindingResult){
+    public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return new ResponseEntity( "campos mal puestos", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity( new Mensaje("campos mal puestos"), HttpStatus.BAD_REQUEST);
         }
         Authentication authentication=authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(),loginUsuario.getPassword()));
