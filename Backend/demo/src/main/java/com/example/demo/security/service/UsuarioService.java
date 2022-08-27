@@ -30,4 +30,10 @@ public class UsuarioService {
     public List<Usuario> listarUsuarios(){
         return usuarioRepository.findAll();
     }
+    public void eliminarUsuario(String usuario){
+        usuarioRepository.deleteByNombreUsuario(usuario);
+    }
+    public boolean existeById(int id){
+        return usuarioRepository.existsById(id);
+    }
 }

@@ -3,18 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Producto } from '../models/producto';
 import {NuevoUsuario} from '../models/nuevo-usuario';
+import {Usuario} from '../models/Usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  productoURL = 'http://localhost:8080/usuario';
+  productoURL = 'http://localhost:8080/auth/usuario';
 
   constructor(private httpClient: HttpClient) { }
 
-  public listarUsuarios(): Observable<NuevoUsuario[]> {
-    return this.httpClient.get<NuevoUsuario[]>(this.productoURL );
+  public listarUsuarios(): Observable<Usuario[]> {
+    return this.httpClient.get<Usuario[]>(this.productoURL );
+  }
+  public delete(usuario: string): Observable<any> {
+    return this.httpClient.post<any>(this.productoURL + `/eliminar`, usuario);
   }
 
   public detail(id: number): Observable<Producto> {
@@ -33,7 +37,5 @@ export class UsuarioService {
     return this.httpClient.put<any>(this.productoURL + `update/${id}`, producto);
   }
 
-  public delete(id: number): Observable<any> {
-    return this.httpClient.delete<any>(this.productoURL + `delete/${id}`);
-  }
+
 }

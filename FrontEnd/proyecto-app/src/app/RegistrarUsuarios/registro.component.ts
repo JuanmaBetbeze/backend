@@ -15,10 +15,11 @@ export class RegistroComponent implements OnInit {
   nuevoUsuario: NuevoUsuario;
   nombre: string;
   nombreUsuario: string;
-  email: string;
+  rol: string;
   password: string;
   errMsj: string;
   isLogged = false;
+  roles: string[];
 
   constructor(
     private tokenService: TokenService,
@@ -34,14 +35,18 @@ export class RegistroComponent implements OnInit {
   }
 
   onRegister(): void {
-    this.nuevoUsuario = new NuevoUsuario(this.nombre, this.nombreUsuario);
+    if (this.rol === 'Editor') {
+      this.roles.push('Editor');
+    }
+    this.roles.push('Observer');
+    this.nuevoUsuario = new NuevoUsuario(this.nombre, this.nombreUsuario, this.roles);
     this.authService.nuevo(this.nuevoUsuario).subscribe(
       data => {
         this.toastr.success('Cuenta Creada', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
 
-        this.router.navigate(['/login']);
+        this.router.navigate(['/usuario']);
       },
       err => {
         this.errMsj = err.error.mensaje;

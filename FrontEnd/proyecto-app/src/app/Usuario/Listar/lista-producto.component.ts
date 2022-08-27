@@ -3,7 +3,7 @@ import { Producto } from '../../models/producto';
 import { UsuarioService } from '../../service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from '../../service/token.service';
-import {NuevoUsuario} from "../../models/nuevo-usuario";
+import {Usuario} from '../../models/Usuario';
 
 @Component({
   selector: 'app-lista-producto',
@@ -12,12 +12,12 @@ import {NuevoUsuario} from "../../models/nuevo-usuario";
 })
 export class ListaProductoComponent implements OnInit {
 
-  usuarios: NuevoUsuario[] = [];
+  usuarios: Usuario[] = [];
   roles: string[];
   isAdmin = false;
 
   constructor(
-    private productoService: UsuarioService,
+    private usuarioService: UsuarioService,
     private toastr: ToastrService,
     private tokenService: TokenService
   ) { }
@@ -33,9 +33,10 @@ export class ListaProductoComponent implements OnInit {
   }
 
   cargarUsuarios(): void {
-    this.productoService.listarUsuarios().subscribe(
+    this.usuarioService.listarUsuarios().subscribe(
       data => {
         this.usuarios = data;
+
       },
       err => {
         console.log(err);
@@ -43,8 +44,8 @@ export class ListaProductoComponent implements OnInit {
     );
   }
 
-  borrar(id: number) {
-    this.productoService.delete(id).subscribe(
+  borrar(nombreUsuario: string) {
+    this.usuarioService.delete(nombreUsuario).subscribe(
       data => {
         this.toastr.success('Producto Eliminado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
@@ -57,6 +58,12 @@ export class ListaProductoComponent implements OnInit {
         });
       }
     );
+  }
+  usuarioNotAdmin(usuario: Usuario): boolean {
+    if (usuario.roles.includes('Admin')) {
+      return false;
+    }
+    return true;
   }
 
 }

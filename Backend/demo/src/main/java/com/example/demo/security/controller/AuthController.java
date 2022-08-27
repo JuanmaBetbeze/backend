@@ -23,9 +23,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -82,10 +84,40 @@ public class AuthController {
         JwtDto jwtDto= new JwtDto(jwt,userDetails.getUsername(),userDetails.getAuthorities());
         return new ResponseEntity(jwtDto,HttpStatus.OK);
     }
-    @GetMapping("/usuario")
-    public ResponseEntity<List<Usuario>> listarUsuarios(){
+    @GetMapping("/auth/usuario")
+    public ResponseEntity<List<NuevoUsuario>> listarUsuarios(){
         List<Usuario> list = usuarioService.listarUsuarios();
-        return new ResponseEntity(list, HttpStatus.OK);
+        List<NuevoUsuario> lista=new ArrayList<>();
+        list.forEach(usuario -> lista.add(new NuevoUsuario(usuario.getNombreUsuario(),usuario.getPassword(),
+                this.obtenerRolMayor(usuario.getRoles()))));
+        return new ResponseEntity(lista, HttpStatus.OK);
+    }
+
+    @PostMapping("/auth/usuario/eliminar")
+    public ResponseEntity<?> eliminarUsuario(@Valid@RequestBody String usuario){
+        if (!usuarioService.existsByNombreUsuario(usuario))
+            return new ResponseEntity<>(new Mensaje("Ese usuario no existe"),HttpStatus.BAD_REQUEST);
+        usuarioService.eliminarUsuario(usuario);
+        return new ResponseEntity<>(new Mensaje("Usuario agregado con exito"),HttpStatus.CREATED);
+
+    }
+
+    public Set<String> obtenerRolMayor(Set<Rol> roles){
+       Set<String> rolesSt= roles.stream().map(rol -> rol.getRolNombre().toString()).collect(Collectors.toSet());
+       Set<String> nuevo= new HashSet<>();
+       if(rolesSt.contains("ADMIN")){
+           nuevo.add("Admin");
+           return nuevo;
+       }
+       else
+           if (rolesSt.contains("EDITOR")){
+               nuevo.add("Editor");
+               return nuevo;
+           }
+           else {
+               nuevo.add("Observador");
+               return nuevo;
+           }
     }
 
 }
