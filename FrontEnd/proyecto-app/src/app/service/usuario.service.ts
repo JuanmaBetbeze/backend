@@ -20,6 +20,9 @@ export class UsuarioService {
   public delete(usuario: string): Observable<any> {
     return this.httpClient.post<any>(this.productoURL + `/eliminar`, usuario);
   }
+  public save(usuario: Usuario): Observable<any> {
+    return this.httpClient.post<any>(this.productoURL + '/nuevo', usuario);
+  }
 
   public detail(id: number): Observable<Producto> {
     return this.httpClient.get<Producto>(this.productoURL + `/detail/${id}`);
@@ -29,9 +32,7 @@ export class UsuarioService {
     return this.httpClient.get<Producto>(this.productoURL + `/detailname/${nombre}`);
   }
 
-  public save(producto: Producto): Observable<any> {
-    return this.httpClient.post<any>(this.productoURL + '/create', producto);
-  }
+
 
   public update(id: number, producto: Producto): Observable<any> {
     return this.httpClient.put<any>(this.productoURL + `update/${id}`, producto);

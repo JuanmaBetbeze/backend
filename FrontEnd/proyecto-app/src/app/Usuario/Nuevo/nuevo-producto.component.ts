@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../service/usuario.service';
-import { Producto } from '../../models/producto';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import {Usuario} from '../../models/Usuario';
+import {NuevoUsuario} from "../../models/nuevo-usuario";
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -10,12 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./nuevo-producto.component.css']
 })
 export class NuevoProductoComponent implements OnInit {
-
-  nombre = '';
-  precio: number = null;
-
+  nombreUsuario: string;
+  password: string;
+  usuario: NuevoUsuario;
+  roles: string [] = [];
+  rol: string;
   constructor(
-    private productoService: UsuarioService,
+    private usuarioService: UsuarioService,
     private toastr: ToastrService,
     private router: Router
     ) { }
@@ -24,13 +26,16 @@ export class NuevoProductoComponent implements OnInit {
   }
 
   onCreate(): void {
-    const producto = new Producto(this.nombre, this.precio);
-    this.productoService.save(producto).subscribe(
+
+    this.roles.push(this.rol);
+    this.usuario = new NuevoUsuario(this.nombreUsuario, this.password, this.roles);
+
+    this.usuarioService.save(this.usuario).subscribe(
       data => {
-        this.toastr.success('Producto Creado', 'OK', {
+        this.toastr.success('Usuario Creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        this.router.navigate(['/lista']);
+        this.router.navigate(['/usuarios']);
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {
