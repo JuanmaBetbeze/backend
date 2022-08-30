@@ -16,11 +16,12 @@
                 <label for="rol">Rol</label>
                 <br>
                 <select [(ngModel)]="rol" name="rol" id="rol" class="form-control form-control-lg" >
+                  <option selected></option>
                   <option value="Editor">Editor</option>
                   <option value="Observer">Observador</option>
                 </select>
               </div>
-                <button class="btn btn-outline-success btn-block" [disabled]="!f.valid">
+                <button class="btn btn-outline-success btn-block" [disabled]="!f.valid || rol==''">
                     <i class="fas fa-plus-circle"></i> Crear</button>
                 <button class="btn btn-outline-primary btn-block" routerLink="/usuarios">
                     <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>

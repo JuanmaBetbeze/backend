@@ -1,15 +1,15 @@
-package com.example.demo.security.controller;
+package com.example.demo.controllers;
 
-import com.example.demo.security.Mensaje;
+import com.example.demo.models.Mensaje;
 import com.example.demo.security.dto.JwtDto;
 import com.example.demo.security.dto.LoginUsuario;
 import com.example.demo.security.dto.NuevoUsuario;
 import com.example.demo.security.entity.Rol;
 import com.example.demo.security.entity.Usuario;
-import com.example.demo.security.enums.RolNombre;
+import com.example.demo.enums.RolNombre;
 import com.example.demo.security.jwt.JwtProvider;
-import com.example.demo.security.service.RolService;
-import com.example.demo.security.service.UsuarioService;
+import com.example.demo.services.RolService;
+import com.example.demo.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

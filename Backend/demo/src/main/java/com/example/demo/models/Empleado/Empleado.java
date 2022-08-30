@@ -1,14 +1,17 @@
 package com.example.demo.models.Empleado;
 
+import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.EntidadPersistente;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "empleado")
-public class EmpleadoModel extends EntidadPersistente {
+public class Empleado extends EntidadPersistente {
   public String nombre;
   public String apellido;
   public int idEmpleado;
@@ -17,6 +20,8 @@ public class EmpleadoModel extends EntidadPersistente {
   @ManyToOne
   public PuestoModel puesto;
   public int dni;
+  @OneToMany
+  public List<Dispositivo> dispositivos;
 
   public String getNombre () {
     return nombre;
@@ -64,5 +69,13 @@ public class EmpleadoModel extends EntidadPersistente {
 
   public void setIdEmpleado (int idEmpleado) {
     this.idEmpleado = idEmpleado;
+  }
+
+  public List<Dispositivo> getDispositivos() {
+    return dispositivos;
+  }
+
+  public void setDispositivos(List<Dispositivo> dispositivos) {
+    this.dispositivos = dispositivos;
   }
 }

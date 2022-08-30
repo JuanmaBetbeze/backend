@@ -1,33 +1,38 @@
-/*package com.example.demo.services;
+package com.example.demo.services;
 
-import com.example.demo.models.Usuario.UsuarioModel;
+
+import com.example.demo.security.entity.Usuario;
 import com.example.demo.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
+@Transactional
 public class UsuarioService {
-  @Autowired
-  UsuarioRepository usuarioRepository;
-  public List<UsuarioModel> obtenerUsuarios(){
-    return (List<UsuarioModel>) usuarioRepository.findAll();
-  }
-  public UsuarioModel guardarUsuario(UsuarioModel usuario){
-    return usuarioRepository.save(usuario);
-  }
-  public ResponseEntity<?> verificar(UsuarioModel usuario){
-      UsuarioModel user=usuarioRepository.findByuser(usuario.getUser());
-   if(user.getPassword().equals(usuario.getPassword())){
-     return ResponseEntity.ok(usuario);
-   }
-   return ((ResponseEntity<?>) ResponseEntity.internalServerError());
-  }
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+    public Optional<Usuario> getByNombreUsuario(String nombreUsuario){
+        return usuarioRepository.findByNombreUsuario(nombreUsuario);
+    }
+    public boolean existsByNombreUsuario(String nombreUsuario){
+        return usuarioRepository.existsByNombreUsuario(nombreUsuario);
+    }
+    public void save(Usuario usuario){
+        usuarioRepository.save(usuario);
+    }
+    public List<Usuario> listarUsuarios(){
+        return usuarioRepository.findAll();
+    }
+    public void eliminarUsuario(String usuario){
+        usuarioRepository.deleteByNombreUsuario(usuario);
+    }
+    public boolean existeById(int id){
+        return usuarioRepository.existsById(id);
+    }
 }
-
-
- */

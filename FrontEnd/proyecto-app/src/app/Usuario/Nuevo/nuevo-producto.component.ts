@@ -3,7 +3,7 @@ import { UsuarioService } from '../../service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import {Usuario} from '../../models/Usuario';
-import {NuevoUsuario} from "../../models/nuevo-usuario";
+import {NuevoUsuario} from '../../models/nuevo-usuario';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -16,6 +16,7 @@ export class NuevoProductoComponent implements OnInit {
   usuario: NuevoUsuario;
   roles: string [] = [];
   rol: string;
+  rolNotNull = false;
   constructor(
     private usuarioService: UsuarioService,
     private toastr: ToastrService,

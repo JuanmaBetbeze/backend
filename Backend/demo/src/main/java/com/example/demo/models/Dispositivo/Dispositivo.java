@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Device")
-public class DispositivoModel extends EntidadPersistente {
+public class Dispositivo extends EntidadPersistente {
   @ManyToOne
   TipoDispositivoModel tipo;
   String numeroDeSerie;

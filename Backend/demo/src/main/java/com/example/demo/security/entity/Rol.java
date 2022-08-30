@@ -1,6 +1,6 @@
 package com.example.demo.security.entity;
 
-import com.example.demo.security.enums.RolNombre;
+import com.example.demo.enums.RolNombre;
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;

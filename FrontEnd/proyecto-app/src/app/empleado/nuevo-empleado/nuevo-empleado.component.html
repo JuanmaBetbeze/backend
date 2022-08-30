@@ -1,0 +1,67 @@
+<app-menu></app-menu>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-4 mx-auto">
+      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input  [(ngModel)]="empleado.nombre" type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="apellido">Apellido</label>
+          <input [(ngModel)]="empleado.apellido" type="text" class="form-control" id="apellido" name="apellido"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="dni">DNI</label>
+          <input [(ngModel)]="empleado.dni" type="text" class="form-control" id="dni" name="dni"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="id">ID</label>
+          <input [(ngModel)]="empleado.idEmpleado" type="text" class="form-control" id="id" name="id"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="sectorNew">Sector</label>
+          <br>
+          <select [(ngModel)]="empleado.sector" name="sector" id="sector" class="form-control form-control-lg" >
+            <option selected></option>
+            <option [value]="item" *ngFor="let item of sectores">{{item}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sectorNew">Puesto</label>
+          <br>
+          <select [(ngModel)]="empleado.puesto" name="puesto" id="puesto" class="form-control form-control-lg" >
+            <option selected></option>
+            <option [value]="item" *ngFor="let item of puestos">{{item}}</option>
+          </select>
+        </div>
+        <button class="btn btn-outline-success btn-block" [disabled]="!f.valid || empleado.sector=='' || empleado.puesto==''">
+          <i class="fas fa-plus-circle"></i> Crear</button>
+        <button class="btn btn-outline-primary btn-block" routerLink="/usuarios">
+          <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div>
+  <form (ngSubmit)="onCreateSector()" novalidate #f="ngForm">
+    <input [(ngModel)]="sectorNew" type="text" id="sectorNew" name="sectorNew" required>
+    <button class="btn btn-outline-success btn-lg" [disabled]="!f.valid">
+      <i class="fas fa-plus-circle"></i> Nuevo Sector</button>
+
+  </form>
+</div>
+<div>
+  <form (ngSubmit)="onCreatePuestos()" novalidate #f="ngForm">
+    <input [(ngModel)]="puestoNew" type="text" id="puestoNew" name="puestoNew" required>
+    <button class="btn btn-outline-success btn-lg" [disabled]="!f.valid">
+      <i class="fas fa-plus-circle"></i> Nuevo Puesto</button>
+  </form>
+</div>
+
+
+

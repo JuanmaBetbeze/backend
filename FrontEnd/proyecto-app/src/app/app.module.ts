@@ -16,9 +16,11 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
-import { RegistroComponent } from './RegistrarUsuarios/registro.component';
 import { MenuComponent } from './menu/menu.component';
 import { IndexComponent } from './index/index.component';
+import { EmpleadoComponent } from './empleado/empleado.component';
+import { NuevoEmpleadoComponent } from './empleado/nuevo-empleado/nuevo-empleado.component';
+
 
 
 
@@ -30,9 +32,10 @@ import { IndexComponent } from './index/index.component';
     NuevoProductoComponent,
     EditarProductoComponent,
     LoginComponent,
-    RegistroComponent,
     MenuComponent,
-    IndexComponent
+    IndexComponent,
+    EmpleadoComponent,
+    NuevoEmpleadoComponent
   ],
   imports: [
     BrowserModule,

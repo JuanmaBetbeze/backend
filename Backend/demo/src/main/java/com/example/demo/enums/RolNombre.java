@@ -1,4 +1,4 @@
-package com.example.demo.security.enums;
+package com.example.demo.enums;
 
 public enum RolNombre {
     ADMIN,EDITOR,OBSERVER

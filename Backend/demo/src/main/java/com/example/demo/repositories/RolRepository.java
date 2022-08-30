@@ -1,7 +1,7 @@
-package com.example.demo.security.repository;
+package com.example.demo.repositories;
 
 import com.example.demo.security.entity.Rol;
-import com.example.demo.security.enums.RolNombre;
+import com.example.demo.enums.RolNombre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
