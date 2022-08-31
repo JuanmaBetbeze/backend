@@ -28,6 +28,8 @@ export class NuevoEmpleadoComponent implements OnInit {
   ngOnInit() {
     this.cargarSectores();
     this.cargarPuestos();
+    this.empleado.puesto = '';
+    this.empleado.sector = '';
   }
   onCreate(): void {
     this.empleadoService.nuevo(this.empleado).subscribe(data => {
@@ -48,7 +50,7 @@ export class NuevoEmpleadoComponent implements OnInit {
         this.toastr.success('Sector Creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        this.router.navigate(['/empleados/nuevo']);
+        window. location. reload();
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {
@@ -63,7 +65,7 @@ export class NuevoEmpleadoComponent implements OnInit {
         this.toastr.success('Puesto Creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        this.router.navigate(['/empleados/nuevo']);
+        window. location. reload();
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {

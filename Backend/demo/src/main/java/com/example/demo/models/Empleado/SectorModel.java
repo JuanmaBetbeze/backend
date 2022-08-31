@@ -10,6 +10,13 @@ import javax.persistence.Table;
 public class SectorModel extends EntidadPersistente {
   public String sector;
 
+  public SectorModel(String sector) {
+    this.sector = sector;
+  }
+
+  public SectorModel() {
+  }
+
 
   public String getSector () {
     return sector;

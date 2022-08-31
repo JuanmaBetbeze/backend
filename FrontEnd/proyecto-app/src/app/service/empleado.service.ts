@@ -10,7 +10,7 @@ import {Empleado} from '../models/empleado';
 })
 export class EmpleadoService {
 
-  URL = 'http://localhost:8080/empleado';
+  URL = 'http://localhost:8080/empleados';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -18,7 +18,14 @@ export class EmpleadoService {
     return this.httpClient.post<any>(this.URL + '/nuevo', empleado);
   }
 
-  public listarSectores(): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.URL );
+  public listarEmpleados(): Observable<Empleado []> {
+    return this.httpClient.get<Empleado[]>(this.URL );
   }
+  public detail(id: number): Observable<Empleado> {
+    return this.httpClient.get<Empleado>(this.URL + `/detail/${id}`);
+  }
+  public update(id: number, empleado: Empleado): Observable<any> {
+    return this.httpClient.put<any>(this.URL + `/update/${id}`, empleado);
+  }
+
 }

@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-4 mx-auto">
-      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+      <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
         <div class="form-group">
           <label for="nombre">Nombre</label>
           <input  [(ngModel)]="empleado.nombre" type="text" class="form-control" id="nombre" name="nombre" required>
@@ -39,28 +39,12 @@
           </select>
         </div>
         <button class="btn btn-outline-success btn-block" [disabled]="!f.valid || empleado.sector=='' || empleado.puesto==''">
-          <i class="fas fa-plus-circle"></i> Crear</button>
+          <i class="fas fa-plus-circle"></i> Actualizar</button>
         <button class="btn btn-outline-primary btn-block" routerLink="/empleados">
           <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
       </form>
     </div>
   </div>
-</div>
-
-<div>
-  <form (ngSubmit)="onCreateSector()" novalidate #g="ngForm">
-    <input [(ngModel)]="sectorNew" type="text" id="sectorNew" name="sectorNew" required>
-    <button class="btn btn-outline-success btn-lg" [disabled]="!g.valid">
-      <i class="fas fa-plus-circle"></i> Nuevo Sector</button>
-
-  </form>
-</div>
-<div>
-  <form (ngSubmit)="onCreatePuestos()" novalidate #h="ngForm">
-    <input [(ngModel)]="puestoNew" type="text" id="puestoNew" name="puestoNew" required>
-    <button class="btn btn-outline-success btn-lg" [disabled]="!h.valid">
-      <i class="fas fa-plus-circle"></i> Nuevo Puesto</button>
-  </form>
 </div>
 
 

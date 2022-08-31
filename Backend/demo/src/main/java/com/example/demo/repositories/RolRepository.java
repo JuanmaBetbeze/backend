@@ -1,6 +1,6 @@
 package com.example.demo.repositories;
 
-import com.example.demo.security.entity.Rol;
+import com.example.demo.models.Usuario.Rol;
 import com.example.demo.enums.RolNombre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

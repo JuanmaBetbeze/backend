@@ -23,4 +23,7 @@ public class SectorService {
     public List<SectorModel> listarSectores(){
         return sectorRepository.findAll();
     }
+    public SectorModel findByNombre(String sector){
+        return sectorRepository.findBySector(sector);
+    }
 }

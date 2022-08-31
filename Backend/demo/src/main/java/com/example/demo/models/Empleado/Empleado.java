@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,19 @@ public class Empleado extends EntidadPersistente {
   public PuestoModel puesto;
   public int dni;
   @OneToMany
-  public List<Dispositivo> dispositivos;
+  public List<Dispositivo> dispositivos=new ArrayList<>();
+
+  public Empleado() {
+  }
+
+  public Empleado(String nombre, String apellido, int idEmpleado, SectorModel sector, PuestoModel puesto, int dni) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.idEmpleado = idEmpleado;
+    this.sector = sector;
+    this.puesto = puesto;
+    this.dni = dni;
+  }
 
   public String getNombre () {
     return nombre;

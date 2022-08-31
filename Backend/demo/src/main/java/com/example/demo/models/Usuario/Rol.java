@@ -1,4 +1,4 @@
-package com.example.demo.security.entity;
+package com.example.demo.models.Usuario;
 
 import com.example.demo.enums.RolNombre;
 import javax.validation.constraints.NotNull;

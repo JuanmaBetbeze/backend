@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.security.entity.Rol;
+import com.example.demo.models.Usuario.Rol;
 import com.example.demo.enums.RolNombre;
 import com.example.demo.repositories.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;

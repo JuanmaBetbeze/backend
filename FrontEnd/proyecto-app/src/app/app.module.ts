@@ -20,6 +20,7 @@ import { MenuComponent } from './menu/menu.component';
 import { IndexComponent } from './index/index.component';
 import { EmpleadoComponent } from './empleado/empleado.component';
 import { NuevoEmpleadoComponent } from './empleado/nuevo-empleado/nuevo-empleado.component';
+import { EditarEmpleadoComponent } from './empleado/editar-empleado/editar-empleado.component';
 
 
 
@@ -35,7 +36,8 @@ import { NuevoEmpleadoComponent } from './empleado/nuevo-empleado/nuevo-empleado
     MenuComponent,
     IndexComponent,
     EmpleadoComponent,
-    NuevoEmpleadoComponent
+    NuevoEmpleadoComponent,
+    EditarEmpleadoComponent
   ],
   imports: [
     BrowserModule,

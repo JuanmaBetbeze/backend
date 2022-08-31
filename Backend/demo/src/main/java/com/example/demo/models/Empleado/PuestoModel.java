@@ -10,6 +10,13 @@ import javax.persistence.Table;
 public class PuestoModel extends EntidadPersistente {
   public String puesto;
 
+  public PuestoModel() {
+  }
+
+  public PuestoModel(String puesto) {
+    this.puesto = puesto;
+  }
+
   public String getPuesto () {
     return puesto;
   }

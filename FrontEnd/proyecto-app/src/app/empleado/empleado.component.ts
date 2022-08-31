@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {TokenService} from '../service/token.service';
-import {SectorService} from '../service/sector.service';
 import {Router} from '@angular/router';
-import {PuestoService} from '../service/puesto.service';
+import {EmpleadoService} from '../service/empleado.service';
+import {Empleado} from '../models/empleado';
 
 @Component({
   selector: 'app-empleado',
@@ -13,19 +13,29 @@ import {PuestoService} from '../service/puesto.service';
 export class EmpleadoComponent implements OnInit {
   isAdmin = false;
   roles: string[];
+  empleados: Empleado [] = [];
 
-  constructor(    private sectorService: SectorService,
-                  private puestoService: PuestoService,
-                  private toastr: ToastrService,
+  constructor(    private toastr: ToastrService,
                   private tokenService: TokenService,
+                  private empleadoService: EmpleadoService,
                   private router: Router) { }
 
   ngOnInit() {
+    this.listarEmpleados();
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach(rol => {
       if (rol === 'ADMIN') {
         this.isAdmin = true;
       }
     });
+  }
+  listarEmpleados() {
+    this.empleadoService.listarEmpleados().subscribe(data => {
+      this.empleados = data;
+    },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }

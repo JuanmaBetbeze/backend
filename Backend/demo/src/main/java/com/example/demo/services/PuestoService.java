@@ -25,4 +25,7 @@ public class PuestoService {
     public List<PuestoModel> listarPuestos(){
         return puestoRepository.findAll();
     }
+    public PuestoModel findByNombre(String puesto){
+        return puestoRepository.findByPuesto(puesto);
+    }
 }

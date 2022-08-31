@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { ProdGuardService as guard } from './guards/prod-guard.service';
 import {EmpleadoComponent} from './empleado/empleado.component';
 import {NuevoEmpleadoComponent} from './empleado/nuevo-empleado/nuevo-empleado.component';
+import {EditarEmpleadoComponent} from './empleado/editar-empleado/editar-empleado.component';
 
 
 
@@ -19,7 +20,7 @@ const routes: Routes = [
   {path: 'empleados/nuevo', component: NuevoEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN'] }},
 
   // { path: 'detalle/:id', component: DetalleProductoComponent, canActivate: [guard], data: { expectedRol: ['admin', 'user'] } },
-  // { path: 'editar/:id', component: EditarProductoComponent, canActivate: [guard], data: { expectedRol: ['admin'] } },
+   { path: 'empleados/editar/:id', component: EditarEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
