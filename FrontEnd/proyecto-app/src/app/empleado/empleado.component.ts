@@ -11,7 +11,7 @@ import {Empleado} from '../models/empleado';
   styleUrls: ['./empleado.component.css']
 })
 export class EmpleadoComponent implements OnInit {
-  isAdmin = false;
+  permitido = false;
   roles: string[];
   empleados: Empleado [] = [];
 
@@ -24,8 +24,8 @@ export class EmpleadoComponent implements OnInit {
     this.listarEmpleados();
     this.roles = this.tokenService.getAuthorities();
     this.roles.forEach(rol => {
-      if (rol === 'ADMIN') {
-        this.isAdmin = true;
+      if (rol === 'ADMIN' || rol === 'EDITOR') {
+        this.permitido = true;
       }
     });
   }

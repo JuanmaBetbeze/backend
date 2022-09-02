@@ -1,4 +1,4 @@
-package com.example.demo.repositories;
+package com.example.demo.repositories.usuario;
 
 import com.example.demo.models.Usuario.Rol;
 import com.example.demo.enums.RolNombre;

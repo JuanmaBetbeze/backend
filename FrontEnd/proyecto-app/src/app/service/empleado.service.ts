@@ -27,5 +27,8 @@ export class EmpleadoService {
   public update(id: number, empleado: Empleado): Observable<any> {
     return this.httpClient.put<any>(this.URL + `/update/${id}`, empleado);
   }
+  public delete(id: number): Observable<any> {
+    return this.httpClient.post(this.URL + '/delete', id);
+  }
 
 }

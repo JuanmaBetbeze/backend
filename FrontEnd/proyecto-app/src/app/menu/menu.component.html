@@ -11,6 +11,9 @@
         <li class="nav-item"*ngIf="isLogged">
           <a class="nav-link" routerLink="/empleados"><i class="far fa-list-alt"></i> Empleados</a>
         </li>
+        <li class="nav-item"*ngIf="isLogged">
+          <a class="nav-link" routerLink="/dispositivos"><i class="fa fa-mobile"></i> Dispositivos</a>
+        </li>
         <li class="nav-item" *ngIf="isLogged && isAdmin " >
           <a class="nav-link" routerLink="/usuarios"><i class="fa fa-address-book" aria-hidden="false"></i> Usuarios</a>
         </li>

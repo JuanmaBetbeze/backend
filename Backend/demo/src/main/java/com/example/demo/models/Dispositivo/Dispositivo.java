@@ -16,7 +16,19 @@ public class Dispositivo extends EntidadPersistente {
   @ManyToOne
   MarcaModel marca;
   Float valor;
-  Boolean asegurado;
+  boolean asegurado;
+
+  public Dispositivo(TipoDispositivoModel tipo, String numeroDeSerie, String modelo, MarcaModel marca, Float valor, boolean asegurado) {
+    this.tipo = tipo;
+    this.numeroDeSerie = numeroDeSerie;
+    this.modelo = modelo;
+    this.marca = marca;
+    this.valor = valor;
+    this.asegurado = asegurado;
+  }
+
+  public Dispositivo() {
+  }
 
 
   public TipoDispositivoModel getTipo () {
@@ -59,11 +71,11 @@ public class Dispositivo extends EntidadPersistente {
     this.valor = valor;
   }
 
-  public Boolean getAsegurado () {
+  public boolean getAsegurado () {
     return asegurado;
   }
 
-  public void setAsegurado (Boolean asegurado) {
+  public void setAsegurado (boolean asegurado) {
     this.asegurado = asegurado;
   }
 }

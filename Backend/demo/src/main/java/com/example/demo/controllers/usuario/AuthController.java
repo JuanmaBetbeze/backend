@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.usuario;
 
 import com.example.demo.models.Mensaje;
 import com.example.demo.security.dto.JwtDto;
@@ -8,8 +8,8 @@ import com.example.demo.models.Usuario.Rol;
 import com.example.demo.models.Usuario.Usuario;
 import com.example.demo.enums.RolNombre;
 import com.example.demo.security.jwt.JwtProvider;
-import com.example.demo.services.RolService;
-import com.example.demo.services.UsuarioService;
+import com.example.demo.services.usuario.RolService;
+import com.example.demo.services.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -104,7 +104,7 @@ public class AuthController {
         if (!usuarioService.existsByNombreUsuario(usuario))
             return new ResponseEntity<>(new Mensaje("Ese usuario no existe"),HttpStatus.BAD_REQUEST);
         usuarioService.eliminarUsuario(usuario);
-        return new ResponseEntity<>(new Mensaje("Usuario agregado con exito"),HttpStatus.CREATED);
+        return new ResponseEntity<>(new Mensaje("Usuario eliminado con exito"),HttpStatus.CREATED);
 
     }
 

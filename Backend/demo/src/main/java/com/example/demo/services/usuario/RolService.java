@@ -1,8 +1,8 @@
-package com.example.demo.services;
+package com.example.demo.services.usuario;
 
 import com.example.demo.models.Usuario.Rol;
 import com.example.demo.enums.RolNombre;
-import com.example.demo.repositories.RolRepository;
+import com.example.demo.repositories.usuario.RolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

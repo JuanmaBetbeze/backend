@@ -40,6 +40,7 @@
         </div>
         <button class="btn btn-outline-success btn-block" [disabled]="!f.valid || empleado.sector=='' || empleado.puesto==''">
           <i class="fas fa-plus-circle"></i> Actualizar</button>
+        <button class="btn btn-outline-danger btn-block" (click)="borrar()"><i class="far fa-trash-alt"></i> Eliminar</button>
         <button class="btn btn-outline-primary btn-block" routerLink="/empleados">
           <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
       </form>

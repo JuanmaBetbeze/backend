@@ -3,7 +3,7 @@ package com.example.demo.security;
 
 import com.example.demo.security.jwt.JwtEntryPoint;
 import com.example.demo.security.jwt.JwtTokenFilter;
-import com.example.demo.services.UserDetailsServiceImp;
+import com.example.demo.services.usuario.UserDetailsServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

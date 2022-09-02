@@ -1,9 +1,7 @@
-package com.example.demo.services;
+package com.example.demo.services.empleado;
 
 import com.example.demo.models.Empleado.PuestoModel;
-import com.example.demo.models.Empleado.SectorModel;
-import com.example.demo.repositories.PuestoRepository;
-import com.example.demo.repositories.SectorRepository;
+import com.example.demo.repositories.empleado.PuestoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

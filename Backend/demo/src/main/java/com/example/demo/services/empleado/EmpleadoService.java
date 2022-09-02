@@ -1,7 +1,7 @@
-package com.example.demo.services;
+package com.example.demo.services.empleado;
 
 import com.example.demo.models.Empleado.Empleado;
-import com.example.demo.repositories.EmpleadoRepository;
+import com.example.demo.repositories.empleado.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +37,9 @@ public class EmpleadoService {
     }
     public Optional<Empleado> getByNombre(String nombre){
         return empleadoRepository.getEmpleadoByNombre(nombre);
+    }
+
+    public void eliminarEmpleado(Long id){
+        empleadoRepository.deleteById(id);
     }
 }

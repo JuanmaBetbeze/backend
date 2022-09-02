@@ -1,4 +1,4 @@
-package com.example.demo.repositories;
+package com.example.demo.repositories.empleado;
 
 import com.example.demo.models.Empleado.PuestoModel;
 import com.example.demo.models.Empleado.SectorModel;

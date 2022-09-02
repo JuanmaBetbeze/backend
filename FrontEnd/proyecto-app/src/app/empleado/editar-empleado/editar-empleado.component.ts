@@ -57,6 +57,23 @@ export class EditarEmpleadoComponent implements OnInit {
       }
     );
   }
+  borrar(): void {
+    this.empleadoService.delete(this.empleado.id).subscribe(
+      data => {
+        this.toastr.success('Producto Eliminado', 'OK', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        this.router.navigate(['/empleados']).then(() => {
+          window.location.reload();
+        });
+      },
+      err => {
+        this.toastr.error(err.error.mensaje, 'Fail', {
+          timeOut: 3000, positionClass: 'toast-top-center',
+        });
+      }
+    );
+  }
   cargarSectores(): void {
     this.sectorService.listarSectores().subscribe(
       data => {

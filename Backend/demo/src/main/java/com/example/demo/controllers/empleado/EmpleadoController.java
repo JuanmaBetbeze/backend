@@ -1,15 +1,11 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.empleado;
 
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.Empleado.EmpleadoNuevo;
-import com.example.demo.models.Empleado.PuestoModel;
-import com.example.demo.models.Empleado.SectorModel;
 import com.example.demo.models.Mensaje;
-import com.example.demo.models.Usuario.Usuario;
-import com.example.demo.security.dto.NuevoUsuario;
-import com.example.demo.services.EmpleadoService;
-import com.example.demo.services.PuestoService;
-import com.example.demo.services.SectorService;
+import com.example.demo.services.empleado.EmpleadoService;
+import com.example.demo.services.empleado.PuestoService;
+import com.example.demo.services.empleado.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,8 +75,16 @@ public class EmpleadoController {
         empleado.setSector(sectorService.findByNombre(empleadoNuevo.getSector()));
         empleado.setPuesto(puestoService.findByNombre(empleadoNuevo.getPuesto()));
         empleadoService.save(empleado);
-        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("empleado actualizado"), HttpStatus.OK);
     }
 
+    @PostMapping("/empleados/delete")
+    public ResponseEntity<?> eliminarEmpleado(@Valid@RequestBody int id){
+        if (!empleadoService.existsById((long)id))
+            return new ResponseEntity<>(new Mensaje("Ese empleado no existe"),HttpStatus.BAD_REQUEST);
+        empleadoService.eliminarEmpleado((long)id);
+        return new ResponseEntity<>(new Mensaje("Empleado eliminado con exito"),HttpStatus.CREATED);
+
+    }
 
 }

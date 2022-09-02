@@ -3,7 +3,7 @@ package com.example.demo.utils;
 
 import com.example.demo.models.Usuario.Rol;
 import com.example.demo.security.enums.RolNombre;
-import com.example.demo.services.RolService;
+import com.example.demo.services.usuario.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

@@ -7,6 +7,8 @@ import { ProdGuardService as guard } from './guards/prod-guard.service';
 import {EmpleadoComponent} from './empleado/empleado.component';
 import {NuevoEmpleadoComponent} from './empleado/nuevo-empleado/nuevo-empleado.component';
 import {EditarEmpleadoComponent} from './empleado/editar-empleado/editar-empleado.component';
+import {ListarDispositivosComponent} from './dispositivo/listar/listarDispositivos.component';
+import {NuevoDispositivoComponent} from './dispositivo/nuevo/nuevoDispositivo.component';
 
 
 
@@ -16,11 +18,13 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'usuarios', component: ListaProductoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN'] } },
   { path: 'usuarios/nuevo', component: NuevoProductoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN'] } },
-  {path: 'empleados', component: EmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
-  {path: 'empleados/nuevo', component: NuevoEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN'] }},
-
+  {path: 'empleados', component: EmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
+  {path: 'empleados/nuevo', component: NuevoEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
+  {path: 'dispositivos', component: ListarDispositivosComponent, canActivate: [guard], data:
+      { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
+  {path: 'dispositivos/nuevo', component: NuevoDispositivoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
   // { path: 'detalle/:id', component: DetalleProductoComponent, canActivate: [guard], data: { expectedRol: ['admin', 'user'] } },
-   { path: 'empleados/editar/:id', component: EditarEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
+   { path: 'empleados/:id/editar', component: EditarEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

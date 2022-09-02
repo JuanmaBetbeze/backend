@@ -21,6 +21,8 @@ import { IndexComponent } from './index/index.component';
 import { EmpleadoComponent } from './empleado/empleado.component';
 import { NuevoEmpleadoComponent } from './empleado/nuevo-empleado/nuevo-empleado.component';
 import { EditarEmpleadoComponent } from './empleado/editar-empleado/editar-empleado.component';
+import { NuevoDispositivoComponent } from './dispositivo/nuevo/nuevoDispositivo.component';
+import { ListarDispositivosComponent } from './dispositivo/listar/listarDispositivos.component';
 
 
 
@@ -37,7 +39,9 @@ import { EditarEmpleadoComponent } from './empleado/editar-empleado/editar-emple
     IndexComponent,
     EmpleadoComponent,
     NuevoEmpleadoComponent,
-    EditarEmpleadoComponent
+    EditarEmpleadoComponent,
+    NuevoDispositivoComponent,
+    ListarDispositivosComponent
   ],
   imports: [
     BrowserModule,

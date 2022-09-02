@@ -1,8 +1,8 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.empleado;
 
 import com.example.demo.models.Empleado.SectorModel;
 import com.example.demo.models.Mensaje;
-import com.example.demo.services.SectorService;
+import com.example.demo.services.empleado.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

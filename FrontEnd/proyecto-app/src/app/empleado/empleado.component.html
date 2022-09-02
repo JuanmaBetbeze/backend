@@ -4,7 +4,6 @@
   <table id="customers">
     <thead>
     <tr>
-      <th scope="col">ID</th>
       <th scope="col">Nombre</th>
       <th scope="col">Apellido</th>
       <th scope="col">DNI</th>
@@ -12,26 +11,30 @@
       <th scope="col">Sector</th>
       <th scope="col">Puesto</th>
       <th scope="col">Dispositivos</th>
-      <th scope="col">Editar</th>
+      <th scope="col" *ngIf="permitido">Editar</th>
     </tr>
     </thead>
   <tbody>
   <tr *ngFor="let empleado of empleados">
-    <td>{{empleado.id}}</td>
     <td>{{empleado.nombre}}</td>
     <td>{{empleado.apellido}}</td>
     <td>{{empleado.dni}}</td>
     <td>{{empleado.idEmpleado}}</td>
     <td>{{empleado.sector}}</td>
     <td>{{empleado.puesto}}</td>
-    <td></td>
-    <td><button class="btn btn-outline-warning" routerLink="/empleados/editar/{{empleado.id}}"><i class="far fa-edit"></i> Editar</button></td>
+    <td>
+      <li>
+        <a routerLink="/empleados/{{empleado.id}}/dispositivos"><i class="fa fa-mobile"></i> Ver dispositivos </a>
+      </li>
+    </td>
+    <td *ngIf="permitido"><button class="btn btn-outline-success" style="color: green" routerLink="/empleados/{{empleado.id}}/editar">
+      <i class="far fa-edit "style="color: green"></i> Editar</button></td>
 
   </tr>
   </tbody>
   </table>
   <br>
- <div class="mt-3" *ngIf="isAdmin">
+ <div class="mt-3" *ngIf="permitido">
    <button class="btn btn-outline-success btn-lg" routerLink="/empleados/nuevo" style="margin: 10px" >
      <i class="fas fa-plus-circle"></i> Nuevo Empleado</button>
  </div>
