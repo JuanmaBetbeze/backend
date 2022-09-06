@@ -7,9 +7,13 @@
       <th scope="col">Tipo</th>
       <th scope="col">Numero de serie</th>
       <th scope="col">modelo</th>
+      <th scope="col">ID</th>
       <th scope="col">marca</th>
       <th scope="col">valor</th>
       <th scope="col">asegurado</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Historial</th>
+      <th scope="col" *ngIf="permitido">Editar</th>
     </tr>
     </thead>
     <tbody>
@@ -17,10 +21,19 @@
       <td>{{dispositivo.tipo}}</td>
       <td>{{dispositivo.numeroDeSerie}}</td>
       <td>{{dispositivo.modelo}}</td>
+      <td>{{dispositivo.idDispo}}</td>
       <td>{{dispositivo.marca}}</td>
       <td>{{dispositivo.valor}}</td>
       <td *ngIf="dispositivo.asegurado">SI</td>
       <td *ngIf="!dispositivo.asegurado">NO</td>
+      <td *ngIf="dispositivo.empleadoActual==0">SIN ASIGNAR</td>
+      <td *ngIf="dispositivo.empleadoActual!=0">ASIGNADO</td>
+      <td> <li>
+        <a routerLink="/dispositivos/{{dispositivo.id}}/historial"><i class="fa fa-mobile"></i> Ver</a>
+      </li>
+      </td>
+      <td *ngIf="permitido"><button class="btn btn-outline-success" style="color: green" routerLink="/dispositivos/{{dispositivo.id}}/editar">
+        <i class="far fa-edit "style="color: green"></i> Editar</button></td>
     </tr>
     </tbody>
   </table>

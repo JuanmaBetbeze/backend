@@ -15,7 +15,19 @@ export class DispositivoService {
     return this.httpClient.post<any>(this.URL + '/nuevo', dispositivo);
   }
 
-  public listarEmpleados(): Observable<Dispositivo []> {
+  public listarDispositivos(): Observable<Dispositivo []> {
     return this.httpClient.get<Dispositivo[]>(this.URL );
+  }
+  public listarDispositivosSinAsignar(): Observable<Dispositivo []> {
+    return this.httpClient.get<Dispositivo[]>(this.URL + '/SAsignar');
+  }
+  public detail(id: number): Observable<Dispositivo> {
+    return this.httpClient.get<Dispositivo>(this.URL + `/detail/${id}`);
+  }
+  public update(id: number, dispositivo: Dispositivo): Observable<any> {
+    return this.httpClient.put<any>(this.URL + `/update/${id}`, dispositivo);
+  }
+  public delete(id: number): Observable<any> {
+    return this.httpClient.post(this.URL + '/delete', id);
   }
 }

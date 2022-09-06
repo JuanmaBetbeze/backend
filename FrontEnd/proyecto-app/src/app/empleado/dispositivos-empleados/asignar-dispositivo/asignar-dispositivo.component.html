@@ -1,0 +1,36 @@
+<app-menu></app-menu>
+<div class="container">
+  <h1>Dispositivos</h1>
+  <table id="customers">
+    <thead>
+    <tr>
+      <th scope="col">Agregar</th>
+      <th scope="col">ID</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Numero de serie</th>
+      <th scope="col">modelo</th>
+      <th scope="col">marca</th>
+      <th scope="col">valor</th>
+      <th scope="col">asegurado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let dispositivo of dispositivos">
+      <td><input [(ngModel)]="dispositivo.agregar" type=checkbox
+                 name="asegurado" id="asegurado"></td>
+      <td>{{dispositivo.id}}</td>
+      <td>{{dispositivo.tipo}}</td>
+      <td>{{dispositivo.numeroDeSerie}}</td>
+      <td>{{dispositivo.modelo}}</td>
+      <td>{{dispositivo.marca}}</td>
+      <td>{{dispositivo.valor}}</td>
+      <td *ngIf="dispositivo.asegurado">SI</td>
+      <td *ngIf="!dispositivo.asegurado">NO</td>
+    </tr>
+    </tbody>
+  </table>
+  <form (ngSubmit)="onAsignar()" >
+  <button class="btn btn-outline-success btn-block" >
+    <i class="fas fa-plus-circle"></i> Asignar</button>
+  </form>
+</div>

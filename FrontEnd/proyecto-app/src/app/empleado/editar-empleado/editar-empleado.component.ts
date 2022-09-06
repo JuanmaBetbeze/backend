@@ -12,7 +12,7 @@ import {SectorService} from '../../service/sector.service';
   styleUrls: ['./editar-empleado.component.css']
 })
 export class EditarEmpleadoComponent implements OnInit {
-  empleado: Empleado = null;
+  empleado: Empleado = new Empleado();
   sectores: string [];
   puestos: string [];
 

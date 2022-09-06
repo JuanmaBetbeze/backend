@@ -28,7 +28,7 @@ export class ListarDispositivosComponent implements OnInit {
     });
   }
   listarDispositivos(): void {
-    this.dispositivoService.listarEmpleados().subscribe(data => {
+    this.dispositivoService.listarDispositivos().subscribe(data => {
         this.dispositivos = data;
       },
       error => {

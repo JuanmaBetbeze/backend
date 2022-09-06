@@ -1,8 +1,11 @@
 package com.example.demo.controllers.empleado;
 
+import com.example.demo.models.Dispositivo.Dispositivo;
+import com.example.demo.models.Dispositivo.DispositivoNuevo;
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.Empleado.EmpleadoNuevo;
 import com.example.demo.models.Mensaje;
+import com.example.demo.services.dispositivo.DispositivoService;
 import com.example.demo.services.empleado.EmpleadoService;
 import com.example.demo.services.empleado.PuestoService;
 import com.example.demo.services.empleado.SectorService;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -25,6 +29,9 @@ public class EmpleadoController {
     SectorService sectorService;
     @Autowired
     PuestoService puestoService;
+
+    @Autowired
+    DispositivoService dispositivoService;
 
     @PostMapping("empleados/nuevo")
     public ResponseEntity<?> nuevo(@Valid
@@ -86,5 +93,52 @@ public class EmpleadoController {
         return new ResponseEntity<>(new Mensaje("Empleado eliminado con exito"),HttpStatus.CREATED);
 
     }
+    @GetMapping("/empleados/dispositivos/{id}")
+    public ResponseEntity<List<Dispositivo>> listarDispositivos(@PathVariable("id")int id){
+        Optional<Empleado> empleado=empleadoService.getOne((long)id);
+        List<Dispositivo> dispositivos= empleado.get().getDispositivos();
+        List<DispositivoNuevo> dispositivoNuevos=new ArrayList<>();
+        dispositivos.forEach(dispositivo -> dispositivoNuevos.add(crearDispositivoNuevo(dispositivo)));
+        return new ResponseEntity(dispositivoNuevos, HttpStatus.OK);
+    }
+    public DispositivoNuevo crearDispositivoNuevo(Dispositivo dispositivo){
+        if (dispositivo.getEmpleadoActual()==null){
+            return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
+                    dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(), (long) 0);
+        }
+        return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
+                dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId());
+    }
+    @PostMapping("/empleados/dispositivos/asignar/{id}")
+    public ResponseEntity<?> asignarDispositivos(@PathVariable("id")int id, @RequestBody int idDispositivos){
+        if(!empleadoService.existsById((long)id))
+            return new ResponseEntity(new Mensaje("no existe empleado"), HttpStatus.NOT_FOUND);
+        //if(!dispositivoService.existsById((long) id))
+        //  return new ResponseEntity(new Mensaje("no existe dispositivo con id " + idDispositivos), HttpStatus.NOT_FOUND);
+
+        Empleado empleado = empleadoService.getOne((long)id).get();
+        List<Dispositivo> dispositivos=empleado.getDispositivos();
+        Dispositivo dispositivo=dispositivoService.findDispositivo((long)idDispositivos);
+        dispositivo.setEmpleadoActual(empleado);
+        dispositivos.add(dispositivo);
+        empleado.setDispositivos(dispositivos);
+        empleadoService.save(empleado);
+        dispositivoService.save(dispositivo);
+        return new ResponseEntity(new Mensaje("Dispositivo agregado"), HttpStatus.OK);
+    }
+    @PostMapping("/empleados/dispositivos/quitar/{id}")
+    public ResponseEntity<?> quitarDispositivo(@PathVariable("id")int id, @RequestBody int idDispositivos){
+        if(!empleadoService.existsById((long)id))
+            return new ResponseEntity(new Mensaje("no existe empleado"), HttpStatus.NOT_FOUND);
+        Empleado empleado = empleadoService.getOne((long)id).get();
+        List<Dispositivo> dispositivos= empleado.getDispositivos();
+        dispositivos.remove(dispositivoService.findDispositivo((long)idDispositivos));
+        empleado.setDispositivos(dispositivos);
+        empleadoService.save(empleado);
+        return new ResponseEntity(new Mensaje("Dispositivo quitado"), HttpStatus.OK);
+    }
+
+
+
 
 }

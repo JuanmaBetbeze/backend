@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-4 mx-auto">
-      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+      <form (ngSubmit)="onUpdate()" novalidate #f="ngForm">
         <div class="form-group">
           <label for="tipo">Tipo</label>
           <select [(ngModel)]="dispositivo.tipo" name="tipo" id="tipo" class="form-control form-control-lg" >
@@ -44,26 +44,11 @@
                  name="asegurado" id="asegurado">
         </div>
         <button class="btn btn-outline-success btn-block" [disabled]="!f.valid || dispositivo.tipo=='' || dispositivo.marca==''">
-          <i class="fas fa-plus-circle"></i> Crear</button>
+          <i class="fas fa-plus-circle"></i> Actualizar</button>
+        <button class="btn btn-outline-danger btn-block" (click)="borrar()"><i class="far fa-trash-alt"></i> Eliminar</button>
         <button class="btn btn-outline-primary btn-block" routerLink="/dispositivos">
           <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
       </form>
     </div>
   </div>
 </div>
-<div>
-  <form (ngSubmit)="onCreateTipo()" novalidate #g="ngForm">
-    <input [(ngModel)]="tipoNew" type="text" id="tipoNew" name="tipoNew" required>
-    <button class="btn btn-outline-success btn-lg" [disabled]="!g.valid">
-      <i class="fas fa-plus-circle"></i> Nuevo Tipo</button>
-  </form>
-</div>
-<br>
-<div>
-  <form (ngSubmit)="onCreateMarca()" novalidate #h="ngForm">
-    <input [(ngModel)]="marcaNew" type="text" id="marcaNew" name="marcaNew" required>
-    <button class="btn btn-outline-success btn-lg" [disabled]="!h.valid">
-      <i class="fas fa-plus-circle"></i> Nueva Marca</button>
-  </form>
-</div>
-

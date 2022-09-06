@@ -9,6 +9,12 @@ import {NuevoEmpleadoComponent} from './empleado/nuevo-empleado/nuevo-empleado.c
 import {EditarEmpleadoComponent} from './empleado/editar-empleado/editar-empleado.component';
 import {ListarDispositivosComponent} from './dispositivo/listar/listarDispositivos.component';
 import {NuevoDispositivoComponent} from './dispositivo/nuevo/nuevoDispositivo.component';
+import {DispositivosEmpleadosComponent} from './empleado/dispositivos-empleados/dispositivos-empleados.component';
+import {
+  AsignarDispositivoComponent
+} from './empleado/dispositivos-empleados/asignar-dispositivo/asignar-dispositivo.component';
+import {EditarComponent} from './dispositivo/editar/editar.component';
+import {HistorialComponent} from './dispositivo/historial/historial.component';
 
 
 
@@ -25,6 +31,13 @@ const routes: Routes = [
   {path: 'dispositivos/nuevo', component: NuevoDispositivoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
   // { path: 'detalle/:id', component: DetalleProductoComponent, canActivate: [guard], data: { expectedRol: ['admin', 'user'] } },
    { path: 'empleados/:id/editar', component: EditarEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
+  { path: 'dispositivos/:id/editar', component: EditarComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
+  { path: 'empleados/:id/dispositivos', component: DispositivosEmpleadosComponent, canActivate: [guard],
+    data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] } },
+  { path: 'empleados/:id/dispositivos/nuevo', component: AsignarDispositivoComponent, canActivate: [guard],
+    data: { expectedRol: ['ADMIN', 'EDITOR'] } },
+  { path: 'dispositivos/:id/historial', component: HistorialComponent, canActivate: [guard],
+    data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] } },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

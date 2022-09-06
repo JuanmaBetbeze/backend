@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NuevoUsuario } from '../models/nuevo-usuario';
 import { Observable } from 'rxjs';
 import {Empleado} from '../models/empleado';
+import {Dispositivo} from '../models/Dispositivo';
 
 
 @Injectable({
@@ -29,6 +30,15 @@ export class EmpleadoService {
   }
   public delete(id: number): Observable<any> {
     return this.httpClient.post(this.URL + '/delete', id);
+  }
+  public listarDispositivos(id: number): Observable<Dispositivo []> {
+    return this.httpClient.get<Dispositivo []>(this.URL + `/dispositivos/${id}`);
+  }
+  public agregarDispositivos(id: number, idDispositivo: number): Observable<any> {
+    return this.httpClient.post<any>(this.URL + `/dispositivos/asignar/${id}`, idDispositivo);
+  }
+  public quitarDispositivo(id: number, idDispositivo: number): Observable<any> {
+    return this.httpClient.post<any>(this.URL + `/dispositivos/quitar/${id}`, idDispositivo);
   }
 
 }

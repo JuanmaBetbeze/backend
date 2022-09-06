@@ -2,6 +2,7 @@ package com.example.demo.services.dispositivo;
 
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.DispositivoNuevo;
+import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.repositories.dispositivo.DispositivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,24 @@ public class DispositivoService {
     }
     public List<Dispositivo> listarDispositivos(){
         return dispositivoRepository.findAll();
+    }
+    public Dispositivo findDispositivo(Long id){
+        return dispositivoRepository.findById(id).get();
+    }
+
+    public boolean existsById(Long id) {
+        return dispositivoRepository.existsById(id);
+    }
+    public List<Dispositivo> findByAsegurado(boolean asegurado){
+        return dispositivoRepository.findDispositivosByAsegurado(asegurado);
+    }
+    public void eliminarDispositivo(Long id){
+        dispositivoRepository.deleteById(id);
+    }
+    public Dispositivo findDispositivoByModelo(String modelo){
+        return dispositivoRepository.findDispositivoByModelo(modelo);
+    }
+    public List<Dispositivo> findByEmpleadoActual(Empleado empleado){
+        return dispositivoRepository.findDispositivosByEmpleadoActual(empleado);
     }
 }

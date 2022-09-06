@@ -3,10 +3,7 @@ package com.example.demo.models.Empleado;
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.EntidadPersistente;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +12,23 @@ import java.util.List;
 public class Empleado extends EntidadPersistente {
   public String nombre;
   public String apellido;
-  public int idEmpleado;
+  public String idEmpleado;
   @ManyToOne
   public SectorModel sector;
   @ManyToOne
   public PuestoModel puesto;
   public int dni;
   @OneToMany
+  @JoinTable(name = "empleado_dispositivos",
+          joinColumns = @JoinColumn(name = "empleado_id")
+          , inverseJoinColumns = @JoinColumn(name = "dispositivo_id")
+  )
   public List<Dispositivo> dispositivos=new ArrayList<>();
 
   public Empleado() {
   }
 
-  public Empleado(String nombre, String apellido, int idEmpleado, SectorModel sector, PuestoModel puesto, int dni) {
+  public Empleado(String nombre, String apellido, String idEmpleado, SectorModel sector, PuestoModel puesto, int dni) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.idEmpleado = idEmpleado;
@@ -76,11 +77,11 @@ public class Empleado extends EntidadPersistente {
     this.dni = dni;
   }
 
-  public int getIdEmpleado () {
+  public String getIdEmpleado () {
     return idEmpleado;
   }
 
-  public void setIdEmpleado (int idEmpleado) {
+  public void setIdEmpleado (String idEmpleado) {
     this.idEmpleado = idEmpleado;
   }
 

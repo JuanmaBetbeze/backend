@@ -1,21 +1,31 @@
 package com.example.demo.models.Dispositivo;
 
 
+import com.example.demo.models.Empleado.Empleado;
+
 public class DispositivoNuevo {
+    Long id;
     String tipo;
     String numeroDeSerie;
     String modelo;
+    String idDispo;
     String marca;
     Float valor;
     boolean asegurado;
 
-    public DispositivoNuevo(String tipo, String numeroDeSerie, String modelo, String marca, Float valor, boolean asegurado) {
+    Long empleadoActual;
+
+
+    public DispositivoNuevo(Long id,String tipo, String numeroDeSerie, String modelo, String idDispo,String marca, Float valor, boolean asegurado,Long empleadoActual) {
+        this.id=id;
         this.tipo = tipo;
         this.numeroDeSerie = numeroDeSerie;
         this.modelo = modelo;
+        this.idDispo=idDispo;
         this.marca = marca;
         this.valor = valor;
         this.asegurado = asegurado;
+        this.empleadoActual=empleadoActual;
     }
 
 
@@ -65,5 +75,34 @@ public class DispositivoNuevo {
 
     public void setAsegurado (boolean asegurado) {
         this.asegurado = asegurado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isAsegurado() {
+        return asegurado;
+    }
+
+    public String getIdDispo() {
+        return idDispo;
+    }
+
+    public void setIdDispo(String idDispo) {
+        this.idDispo = idDispo;
+    }
+
+
+    public Long getEmpleadoActual() {
+        return empleadoActual;
+    }
+
+    public void setEmpleadoActual(Long empleadoActual) {
+        this.empleadoActual = empleadoActual;
     }
 }

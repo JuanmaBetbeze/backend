@@ -1,30 +1,37 @@
 package com.example.demo.models.Dispositivo;
 
+import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.EntidadPersistente;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Device")
+@Table(name = "Dispositivo")
 public class Dispositivo extends EntidadPersistente {
   @ManyToOne
   TipoDispositivoModel tipo;
   String numeroDeSerie;
   String modelo;
+  String idDispo;
   @ManyToOne
   MarcaModel marca;
   Float valor;
   boolean asegurado;
+  @OneToOne
+  Empleado empleadoActual;
 
-  public Dispositivo(TipoDispositivoModel tipo, String numeroDeSerie, String modelo, MarcaModel marca, Float valor, boolean asegurado) {
+  public Dispositivo(TipoDispositivoModel tipo, String numeroDeSerie, String modelo,String idDispo, MarcaModel marca, Float valor, boolean asegurado,Empleado empleadoActual) {
     this.tipo = tipo;
     this.numeroDeSerie = numeroDeSerie;
     this.modelo = modelo;
+    this.idDispo=idDispo;
     this.marca = marca;
     this.valor = valor;
     this.asegurado = asegurado;
+    this.empleadoActual = empleadoActual;
   }
 
   public Dispositivo() {
@@ -77,5 +84,21 @@ public class Dispositivo extends EntidadPersistente {
 
   public void setAsegurado (boolean asegurado) {
     this.asegurado = asegurado;
+  }
+
+  public String getIdDispo() {
+    return idDispo;
+  }
+
+  public void setIdDispo(String idDispo) {
+    this.idDispo = idDispo;
+  }
+
+  public Empleado getEmpleadoActual() {
+    return empleadoActual;
+  }
+
+  public void setEmpleadoActual(Empleado empleado) {
+    this.empleadoActual = empleado;
   }
 }

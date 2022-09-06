@@ -4,12 +4,12 @@ public class EmpleadoNuevo {
     int id;
     String nombre;
     String apellido;
-    int idEmpleado;
+    String idEmpleado;
     String sector;
     String puesto;
     int dni;
 
-    public EmpleadoNuevo(int id,String nombre, String apellido, int idEmpleado, String sector, String puesto, int dni) {
+    public EmpleadoNuevo(int id,String nombre, String apellido, String idEmpleado, String sector, String puesto, int dni) {
         this.id=id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -35,11 +35,11 @@ public class EmpleadoNuevo {
         this.apellido = apellido;
     }
 
-    public int getIdEmpleado() {
+    public String getIdEmpleado() {
         return idEmpleado;
     }
 
-    public void setIdEmpleado(int idEmpleado) {
+    public void setIdEmpleado(String idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
 

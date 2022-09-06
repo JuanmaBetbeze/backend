@@ -28,8 +28,6 @@ export class NuevoDispositivoComponent implements OnInit {
   ngOnInit() {
     this.cargarTipos();
     this.cargarMarcas();
-    this.dispositivo.tipo = '';
-    this.dispositivo.marca = '';
   }
   onCreate(): void {
     this.dispositivosService.nuevo(this.dispositivo).subscribe(data => {
