@@ -5,7 +5,9 @@ import com.example.demo.models.Dispositivo.DispositivoNuevo;
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.Empleado.EmpleadoNuevo;
 import com.example.demo.models.Mensaje;
+import com.example.demo.models.historial.HistorialDispositivo;
 import com.example.demo.services.dispositivo.DispositivoService;
+import com.example.demo.services.dispositivo.HistorialDispositivoService;
 import com.example.demo.services.empleado.EmpleadoService;
 import com.example.demo.services.empleado.PuestoService;
 import com.example.demo.services.empleado.SectorService;
@@ -16,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +35,9 @@ public class EmpleadoController {
 
     @Autowired
     DispositivoService dispositivoService;
+
+    @Autowired
+    HistorialDispositivoService historialDispositivoService;
 
     @PostMapping("empleados/nuevo")
     public ResponseEntity<?> nuevo(@Valid
@@ -119,9 +125,14 @@ public class EmpleadoController {
         Empleado empleado = empleadoService.getOne((long)id).get();
         List<Dispositivo> dispositivos=empleado.getDispositivos();
         Dispositivo dispositivo=dispositivoService.findDispositivo((long)idDispositivos);
+        List<HistorialDispositivo> historialDispositivos=dispositivo.getHistorialDispositivo();
+        HistorialDispositivo nuevo=new HistorialDispositivo(empleado, LocalDate.now(),null);
+        historialDispositivos.add(nuevo);
+        dispositivo.setHistorialDispositivo(historialDispositivos);
         dispositivo.setEmpleadoActual(empleado);
         dispositivos.add(dispositivo);
         empleado.setDispositivos(dispositivos);
+        historialDispositivoService.save(nuevo);
         empleadoService.save(empleado);
         dispositivoService.save(dispositivo);
         return new ResponseEntity(new Mensaje("Dispositivo agregado"), HttpStatus.OK);
@@ -132,10 +143,21 @@ public class EmpleadoController {
             return new ResponseEntity(new Mensaje("no existe empleado"), HttpStatus.NOT_FOUND);
         Empleado empleado = empleadoService.getOne((long)id).get();
         List<Dispositivo> dispositivos= empleado.getDispositivos();
-        dispositivos.remove(dispositivoService.findDispositivo((long)idDispositivos));
+        Dispositivo dispositivo=dispositivoService.findDispositivo((long)idDispositivos);
+        dispositivos.remove(dispositivo);
+        dispositivo.setEmpleadoActual(null);
+        List<HistorialDispositivo> historialDispositivo=dispositivo.getHistorialDispositivo();
+        historialDispositivo.forEach(this::desasignar);
         empleado.setDispositivos(dispositivos);
+        dispositivoService.save(dispositivo);
         empleadoService.save(empleado);
         return new ResponseEntity(new Mensaje("Dispositivo quitado"), HttpStatus.OK);
+    }
+    public void desasignar(HistorialDispositivo historialDispositivo){
+        if(historialDispositivo.getFechaDesincronizacion()==null){
+            historialDispositivo.setFechaDesincronizacion(LocalDate.now());
+            historialDispositivoService.save(historialDispositivo);
+        }
     }
 
 

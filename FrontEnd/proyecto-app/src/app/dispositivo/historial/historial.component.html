@@ -26,7 +26,7 @@
 </div>
 <br>
 <div class="container">
-  <table id="customers">
+  <table id="customers3">
     <thead>
     <tr>
       <th scope="col">Nombre</th>
@@ -35,15 +35,24 @@
       <th scope="col">ID</th>
       <th scope="col">Sector</th>
       <th scope="col">Puesto</th>
+      <th scope="col">Fecha de Asignación</th>
+      <th scope="col">Fecha de desincronización</th>
     </tr>
     </thead>
     <tbody>
-    <td>{{empleadoActual.nombre}}</td>
-    <td>{{empleadoActual.apellido}}</td>
-    <td>{{empleadoActual.dni}}</td>
-    <td>{{empleadoActual.idEmpleado}}</td>
-    <td>{{empleadoActual.sector}}</td>
-    <td>{{empleadoActual.puesto}}</td>
+    <tr *ngFor="let historialDispositivo of historialDispositivos" >
+
+      <td>{{historialDispositivo.nombre}}</td>
+      <td>{{historialDispositivo.apellido}}</td>
+      <td>{{historialDispositivo.dni}}</td>
+      <td>{{historialDispositivo.idEmpleado}}</td>
+      <td>{{historialDispositivo.sector}}</td>
+      <td>{{historialDispositivo.puesto}}</td>
+      <td>{{historialDispositivo.fechaAsignacion}}</td>
+      <td *ngIf="historialDispositivo.fechaDesincronizacion!=null">{{historialDispositivo.fechaDesincronizacion}}</td>
+      <td *ngIf="historialDispositivo.fechaDesincronizacion==null">VIGENTE</td>
+
+    </tr>
     </tbody>
   </table>
 </div>

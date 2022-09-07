@@ -6,6 +6,8 @@ import {EmpleadoService} from '../../service/empleado.service';
 import {TokenService} from '../../service/token.service';
 import {Dispositivo} from '../../models/Dispositivo';
 import {DispositivoService} from '../../service/dispositivo.service';
+import {HistorialDispositivo} from '../../models/historialDispositivo';
+import {HistorialDispositivoService} from '../../service/HistorialDispositivo.service';
 
 @Component({
   selector: 'app-historial',
@@ -16,12 +18,14 @@ export class HistorialComponent implements OnInit {
   empleadoActual: Empleado = new Empleado();
   dispositivo: Dispositivo = new Dispositivo();
   id: number;
+  historialDispositivos: HistorialDispositivo [] = [];
   constructor(private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
               private router: Router,
               private empleadoService: EmpleadoService,
               private tokenService: TokenService,
-              private dispositivosService: DispositivoService) { }
+              private dispositivosService: DispositivoService,
+              private historialDispositivoService: HistorialDispositivoService) { }
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -31,7 +35,7 @@ export class HistorialComponent implements OnInit {
     this.dispositivosService.detail(this.id).subscribe(
       data => {
         this.dispositivo = data;
-        this.detallesEmpleadoActual();
+        this.listarHistorialDispositivo();
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {
@@ -40,10 +44,10 @@ export class HistorialComponent implements OnInit {
       }
     );
   }
-  detallesEmpleadoActual(): void {
-    this.empleadoService.detail(this.dispositivo.empleadoActual).subscribe(
+  listarHistorialDispositivo(): void {
+    this.historialDispositivoService.listarHistorialDispositivo(this.dispositivo.id).subscribe(
       data => {
-        this.empleadoActual = data;
+        this.historialDispositivos = data;
       },
       err => {
         this.toastr.error(err.error.mensaje, 'Fail', {

@@ -12,7 +12,6 @@ public class DispositivoNuevo {
     String marca;
     Float valor;
     boolean asegurado;
-
     Long empleadoActual;
 
 

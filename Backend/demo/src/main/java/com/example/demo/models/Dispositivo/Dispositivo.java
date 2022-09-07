@@ -2,11 +2,11 @@ package com.example.demo.models.Dispositivo;
 
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.EntidadPersistente;
+import com.example.demo.models.historial.HistorialDispositivo;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Dispositivo")
@@ -22,6 +22,12 @@ public class Dispositivo extends EntidadPersistente {
   boolean asegurado;
   @OneToOne
   Empleado empleadoActual;
+  @OneToMany
+  @JoinTable(name = "historial_Dispositivos",
+          joinColumns = @JoinColumn(name = "dispositivo_id")
+          , inverseJoinColumns = @JoinColumn(name = "historial_id")
+  )
+  List<HistorialDispositivo> historialDispositivo= new ArrayList<>();
 
   public Dispositivo(TipoDispositivoModel tipo, String numeroDeSerie, String modelo,String idDispo, MarcaModel marca, Float valor, boolean asegurado,Empleado empleadoActual) {
     this.tipo = tipo;
@@ -101,4 +107,12 @@ public class Dispositivo extends EntidadPersistente {
   public void setEmpleadoActual(Empleado empleado) {
     this.empleadoActual = empleado;
   }
+  public List<HistorialDispositivo> getHistorialDispositivo() {
+    return historialDispositivo;
+  }
+
+  public void setHistorialDispositivo(List<HistorialDispositivo> historialDispositivo) {
+    this.historialDispositivo = historialDispositivo;
+  }
+
 }
