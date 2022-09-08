@@ -2,6 +2,7 @@ package com.example.demo.services.dispositivo;
 
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.DispositivoNuevo;
+import com.example.demo.models.Dispositivo.TipoDispositivoModel;
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.repositories.dispositivo.DispositivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,8 @@ public class DispositivoService {
     }
     public List<Dispositivo> findByEmpleadoActual(Empleado empleado){
         return dispositivoRepository.findDispositivosByEmpleadoActual(empleado);
+    }
+    public List<Dispositivo> findByTipo(TipoDispositivoModel tipo){
+        return dispositivoRepository.findDispositivosByTipo(tipo);
     }
 }

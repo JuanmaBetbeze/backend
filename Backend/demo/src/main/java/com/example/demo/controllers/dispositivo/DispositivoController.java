@@ -2,6 +2,7 @@ package com.example.demo.controllers.dispositivo;
 
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.DispositivoNuevo;
+import com.example.demo.models.Dispositivo.TipoDispositivoModel;
 import com.example.demo.models.Mensaje;
 import com.example.demo.services.dispositivo.DispositivoService;
 import com.example.demo.services.dispositivo.MarcaService;
@@ -99,7 +100,20 @@ public class DispositivoController {
             return new ResponseEntity<>(new Mensaje("Ese dispositivo no existe"),HttpStatus.BAD_REQUEST);
         dispositivoService.eliminarDispositivo((long)id);
         return new ResponseEntity<>(new Mensaje("Empleado eliminado con exito"),HttpStatus.CREATED);
+    }
+    @PostMapping("/dispositivo/filtrar")
+    public ResponseEntity<List<DispositivoNuevo>> filtrar(@RequestBody List<String> filtrarList){
+        String filtrado=filtrarList.get(0);
+        String valor=filtrarList.get(1);
+        List<Dispositivo>dispositivos=new ArrayList<>();
+        if(Objects.equals(filtrado, "tipo")){
+            TipoDispositivoModel tipo=tipoDispositivoService.findByNombre(valor);
+            dispositivos=dispositivoService.findByTipo(tipo);
+        }
+        List<DispositivoNuevo> lista=new ArrayList<>();
+        dispositivos.forEach(dispositivo -> lista.add(crearDispositivoNuevo(dispositivo)));
 
+        return new ResponseEntity(lista, HttpStatus.OK);
     }
 
 }

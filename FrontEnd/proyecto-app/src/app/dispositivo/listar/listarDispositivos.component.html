@@ -43,3 +43,63 @@
       <i class="fas fa-plus-circle"></i> Nuevo Dispositivo</button>
   </div>
 </div>
+<br>
+<div class="mt-3">
+  <p>Filtrar por:
+    <select [(ngModel)]="filtrado">
+      <option value="" selected>Seleccione una categoría</option>
+      <option value="tipo">Tipo</option>
+      <option value="numeroDeSerie">Numero de serie</option>
+      <option value="modelo">Modelo</option>
+      <option value="idDispo">ID</option>
+      <option value="marca">Marca</option>
+      <option value="valor">Valor</option>
+      <option value="asegurado">Asegurado</option>
+      <option value="duenio">Asignado</option>
+    </select>
+  </p>
+</div>
+  <p [hidden]="filtrado != 'tipo'">Tipo:
+    <select [(ngModel)]="valor" name="tipo" id="tipo" >
+      <option selected value="">Seleccione un tipo</option>
+      <option [value]="item" *ngFor="let item of tipos">{{item}}</option>
+    </select>
+  </p>
+  <p [hidden]="filtrado != 'numeroDeSerie'">Numero de serie:
+    <input [(ngModel)]="valor" type="text" class="form-control" id="numeroDeSerie"
+           name="numeroDeSerie" style="width: 250px">
+  </p>
+<p [hidden]="filtrado != 'modelo'">Modelo:
+  <input [(ngModel)]="valor" type="text" class="form-control" id="modelo"
+         name="modelo" style="width: 250px">
+</p>
+<p [hidden]="filtrado != 'idDispo'">ID:
+  <input [(ngModel)]="valor" type="text" class="form-control" id="idDispo"
+         name="idDispo" style="width: 250px">
+</p>
+<p [hidden]="filtrado != 'marca'">Marca:
+  <select [(ngModel)]="valor" name="tipo" id="marca" >
+    <option selected value="">Seleccione una marca</option>
+    <option [value]="item" *ngFor="let item of marcas">{{item}}</option>
+  </select>
+</p>
+<p [hidden]="filtrado != 'valor'">Valor:
+  <input [(ngModel)]="valor" type="text" class="form-control" id="valor"
+         name="valor" style="width: 250px">
+</p>
+<p [hidden]="filtrado != 'asegurado'">Asegurado:
+  <select [(ngModel)]="valor" name="tipo" id="asegurado" >
+    <option selected>Seleccione una opción </option>
+    <option> SI </option>
+    <option> NO </option>
+  </select>
+</p>
+<p [hidden]="filtrado != 'duenio'">Asginado:
+  <select [(ngModel)]="valor" name="tipo" id="asignado" >
+    <option selected>Seleccione una opción </option>
+    <option value="asignado"> Sin asignar </option>
+    <option value="sinasignar"> Asignar </option>
+  </select>
+</p>
+<button style="width: 250px" class="btn btn-outline-success btn-block" [disabled]="filtrado=='' || valor==''" (click)="filtrar()">
+  <i class="fas fa-plus-circle"></i> Filtrar</button>

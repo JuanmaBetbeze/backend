@@ -30,4 +30,7 @@ export class DispositivoService {
   public delete(id: number): Observable<any> {
     return this.httpClient.post(this.URL + '/delete', id);
   }
+  public filtrarDispositivo(filtrarlist: string[]): Observable<Dispositivo []> {
+    return this.httpClient.post<Dispositivo[]>(this.URL + '/filtrar', filtrarlist);
+  }
 }
