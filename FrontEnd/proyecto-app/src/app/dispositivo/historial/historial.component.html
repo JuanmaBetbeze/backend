@@ -40,6 +40,7 @@
       <th scope="col">Puesto</th>
       <th scope="col">Fecha de Asignación</th>
       <th scope="col">Fecha de desincronización</th>
+      <th scope="col">Desincronizado por</th>
     </tr>
     </thead>
     <tbody>
@@ -54,6 +55,8 @@
       <td>{{historialDispositivo.fechaAsignacion}}</td>
       <td *ngIf="historialDispositivo.fechaDesincronizacion!=null">{{historialDispositivo.fechaDesincronizacion}}</td>
       <td *ngIf="historialDispositivo.fechaDesincronizacion==null">VIGENTE</td>
+      <td *ngIf="historialDispositivo.ejecutor==null">-</td>
+      <td *ngIf="historialDispositivo.ejecutor!=null">{{historialDispositivo.ejecutor}}</td>
 
     </tr>
     </tbody>

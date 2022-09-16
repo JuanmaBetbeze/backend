@@ -23,4 +23,7 @@ public class HistorialDispositivoService {
     public List<HistorialDispositivo> listarHistorial(){
         return historialDispositivoRepository.findAll();
     }
+    public void  eliminar(Long id){
+        historialDispositivoRepository.deleteById(id);
+    }
 }

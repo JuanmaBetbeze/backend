@@ -2,8 +2,12 @@ package com.example.demo.controllers.empleado;
 
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.DispositivoNuevo;
+import com.example.demo.models.Dispositivo.MarcaModel;
+import com.example.demo.models.Dispositivo.TipoDispositivoModel;
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.Empleado.EmpleadoNuevo;
+import com.example.demo.models.Empleado.PuestoModel;
+import com.example.demo.models.Empleado.SectorModel;
 import com.example.demo.models.Mensaje;
 import com.example.demo.models.historial.HistorialDispositivo;
 import com.example.demo.services.dispositivo.DispositivoService;
@@ -21,6 +25,7 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -95,9 +100,34 @@ public class EmpleadoController {
     public ResponseEntity<?> eliminarEmpleado(@Valid@RequestBody int id){
         if (!empleadoService.existsById((long)id))
             return new ResponseEntity<>(new Mensaje("Ese empleado no existe"),HttpStatus.BAD_REQUEST);
+        List<HistorialDispositivo> historialDispositivos=historialDispositivoService.listarHistorial();
+        historialDispositivos.forEach(historialDispositivo -> this.eliminarHistorial(historialDispositivo,id));
+        List<Dispositivo>dispositivos=dispositivoService.listarDispositivos();
+        dispositivos.stream().filter(dispositivo -> dispositivo.getEmpleadoActual().getId()==id).forEach(this::setearEmpleadoActual);
+        Empleado empleado=empleadoService.getOne((long)id).get();
+        empleado.setDispositivos(null);
         empleadoService.eliminarEmpleado((long)id);
         return new ResponseEntity<>(new Mensaje("Empleado eliminado con exito"),HttpStatus.CREATED);
 
+    }
+    public void setearEmpleadoActual(Dispositivo dispositivo){
+        dispositivo.setEmpleadoActual(null);
+        dispositivoService.save(dispositivo);
+    }
+    public void eliminarHistorial(HistorialDispositivo historialDispositivo,int id){
+        List<Dispositivo> dispositivos=dispositivoService.listarDispositivos();
+        if(historialDispositivo.getEmpleado().getId().intValue()==id) {
+            dispositivos.forEach(dispositivo->quitarHistorial(dispositivo,historialDispositivo));
+            historialDispositivoService.eliminar(historialDispositivo.getId());
+        }
+    }
+    public void quitarHistorial(Dispositivo dispositivo,HistorialDispositivo historialDispositivo){
+        List<HistorialDispositivo>historialDispositivos=dispositivo.getHistorialDispositivo();
+        if(historialDispositivos.contains(historialDispositivo)){
+            historialDispositivos.remove(historialDispositivo);
+            dispositivo.setHistorialDispositivo(historialDispositivos);
+            dispositivoService.save(dispositivo);
+        }
     }
     @GetMapping("/empleados/dispositivos/{id}")
     public ResponseEntity<List<Dispositivo>> listarDispositivos(@PathVariable("id")int id){
@@ -110,13 +140,13 @@ public class EmpleadoController {
     public DispositivoNuevo crearDispositivoNuevo(Dispositivo dispositivo){
         if (dispositivo.getEmpleadoActual()==null){
             return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
-                    dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(), (long) 0);
+                    dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(), (long) 0, dispositivo.getEjecutor());
         }
         return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
-                dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId());
+                dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId(),dispositivo.getEjecutor());
     }
-    @PostMapping("/empleados/dispositivos/asignar/{id}")
-    public ResponseEntity<?> asignarDispositivos(@PathVariable("id")int id, @RequestBody int idDispositivos){
+    @PostMapping("/empleados/dispositivos/asignar/{id}/{ejecutor}")
+    public ResponseEntity<?> asignarDispositivos(@PathVariable("id")int id,@PathVariable("ejecutor")String ejecutor, @RequestBody int idDispositivos){
         if(!empleadoService.existsById((long)id))
             return new ResponseEntity(new Mensaje("no existe empleado"), HttpStatus.NOT_FOUND);
         //if(!dispositivoService.existsById((long) id))
@@ -126,10 +156,11 @@ public class EmpleadoController {
         List<Dispositivo> dispositivos=empleado.getDispositivos();
         Dispositivo dispositivo=dispositivoService.findDispositivo((long)idDispositivos);
         List<HistorialDispositivo> historialDispositivos=dispositivo.getHistorialDispositivo();
-        HistorialDispositivo nuevo=new HistorialDispositivo(empleado, LocalDate.now(),null);
+        HistorialDispositivo nuevo=new HistorialDispositivo(empleado, LocalDate.now(),null,null);
         historialDispositivos.add(nuevo);
         dispositivo.setHistorialDispositivo(historialDispositivos);
         dispositivo.setEmpleadoActual(empleado);
+        dispositivo.setEjecutor(ejecutor);
         dispositivos.add(dispositivo);
         empleado.setDispositivos(dispositivos);
         historialDispositivoService.save(nuevo);
@@ -137,8 +168,8 @@ public class EmpleadoController {
         dispositivoService.save(dispositivo);
         return new ResponseEntity(new Mensaje("Dispositivo agregado"), HttpStatus.OK);
     }
-    @PostMapping("/empleados/dispositivos/quitar/{id}")
-    public ResponseEntity<?> quitarDispositivo(@PathVariable("id")int id, @RequestBody int idDispositivos){
+    @PostMapping("/empleados/dispositivos/quitar/{id}/{ejecutor}")
+    public ResponseEntity<?> quitarDispositivo(@PathVariable("id")int id,@PathVariable("ejecutor")String ejecutor, @RequestBody int idDispositivos){
         if(!empleadoService.existsById((long)id))
             return new ResponseEntity(new Mensaje("no existe empleado"), HttpStatus.NOT_FOUND);
         Empleado empleado = empleadoService.getOne((long)id).get();
@@ -147,17 +178,56 @@ public class EmpleadoController {
         dispositivos.remove(dispositivo);
         dispositivo.setEmpleadoActual(null);
         List<HistorialDispositivo> historialDispositivo=dispositivo.getHistorialDispositivo();
-        historialDispositivo.forEach(this::desasignar);
+        historialDispositivo.forEach(historialDispositivo1 -> this.desasignar(historialDispositivo1,ejecutor));
         empleado.setDispositivos(dispositivos);
         dispositivoService.save(dispositivo);
         empleadoService.save(empleado);
         return new ResponseEntity(new Mensaje("Dispositivo quitado"), HttpStatus.OK);
     }
-    public void desasignar(HistorialDispositivo historialDispositivo){
+    public void desasignar(HistorialDispositivo historialDispositivo,String ejecutor){
         if(historialDispositivo.getFechaDesincronizacion()==null){
             historialDispositivo.setFechaDesincronizacion(LocalDate.now());
+            historialDispositivo.setEjecutor(ejecutor);
             historialDispositivoService.save(historialDispositivo);
         }
+    }
+
+    @PostMapping("/empleados/filtrar")
+    public ResponseEntity<List<EmpleadoNuevo>> filtrar(@RequestBody List<String> filtrarList){
+        String filtrado=filtrarList.get(0);
+        String valor=filtrarList.get(1);
+        List<Empleado>empleados=new ArrayList<>();
+        if(Objects.equals(filtrado, "sector")){
+            SectorModel sectorModel=sectorService.findByNombre(valor);
+            empleados=empleadoService.findBySector(sectorModel);
+        }
+        if(Objects.equals(filtrado,"nombre")){
+            empleados=empleadoService.findByNombre(valor);
+        }
+        if(Objects.equals(filtrado,"apellido")){
+            empleados=empleadoService.findByApellido(valor);
+        }
+        if(Objects.equals(filtrado,"dni")){
+            empleados=empleadoService.findByDni(Integer.parseInt(valor));
+        }
+        if(Objects.equals(filtrado,"puesto")){
+            PuestoModel puestoModel=puestoService.findByNombre(valor);
+            empleados=empleadoService.findByPuesto(puestoModel);
+        }
+        if(Objects.equals(filtrado,"idEmpleado")){
+            empleados=empleadoService.findByIdEmpleado(valor);
+        }
+        if (Objects.equals(filtrado,"listar")){
+            empleados=empleadoService.listarEmpleados();
+        }
+        List<EmpleadoNuevo> lista=new ArrayList<>();
+        empleados.forEach(empleado -> lista.add(new EmpleadoNuevo
+                (empleado.getId().intValue(),empleado.getNombre(),
+                        empleado.getApellido(),empleado.getIdEmpleado(),
+                        empleado.getSector().getSector(),
+                empleado.getPuesto().getPuesto(),empleado.getDni())));
+
+        return new ResponseEntity(lista, HttpStatus.OK);
     }
 
 

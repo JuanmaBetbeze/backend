@@ -28,8 +28,9 @@ public class Dispositivo extends EntidadPersistente {
           , inverseJoinColumns = @JoinColumn(name = "historial_id")
   )
   List<HistorialDispositivo> historialDispositivo= new ArrayList<>();
-
-  public Dispositivo(TipoDispositivoModel tipo, String numeroDeSerie, String modelo,String idDispo, MarcaModel marca, Float valor, boolean asegurado,Empleado empleadoActual) {
+  String ejecutor;
+  public Dispositivo(TipoDispositivoModel tipo, String numeroDeSerie, String modelo,String idDispo,
+                     MarcaModel marca, Float valor, boolean asegurado,Empleado empleadoActual,String ejecutor) {
     this.tipo = tipo;
     this.numeroDeSerie = numeroDeSerie;
     this.modelo = modelo;
@@ -38,6 +39,7 @@ public class Dispositivo extends EntidadPersistente {
     this.valor = valor;
     this.asegurado = asegurado;
     this.empleadoActual = empleadoActual;
+    this.ejecutor=ejecutor;
   }
 
   public Dispositivo() {
@@ -115,4 +117,11 @@ public class Dispositivo extends EntidadPersistente {
     this.historialDispositivo = historialDispositivo;
   }
 
+  public String getEjecutor() {
+    return ejecutor;
+  }
+
+  public void setEjecutor(String ejecutor) {
+    this.ejecutor = ejecutor;
+  }
 }

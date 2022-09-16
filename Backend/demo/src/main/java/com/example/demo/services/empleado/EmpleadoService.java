@@ -1,6 +1,8 @@
 package com.example.demo.services.empleado;
 
 import com.example.demo.models.Empleado.Empleado;
+import com.example.demo.models.Empleado.PuestoModel;
+import com.example.demo.models.Empleado.SectorModel;
 import com.example.demo.repositories.empleado.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +44,24 @@ public class EmpleadoService {
     public void eliminarEmpleado(Long id){
         empleadoRepository.deleteById(id);
     }
+    public List<Empleado> findByNombre(String nombre){
+        return empleadoRepository.findEmpleadosByNombre(nombre);
+    }
+    public List<Empleado> findByApellido(String apellido){
+        return empleadoRepository.findEmpleadosByApellido(apellido);
+    }
+    public List<Empleado> findByDni(int dni){
+        return empleadoRepository.findEmpleadosByDni(dni);
+    }
+    public List<Empleado> findByIdEmpleado(String idEmpleado){
+        return empleadoRepository.findEmpleadosByIdEmpleado(idEmpleado);
+    }
+    public List<Empleado> findByPuesto(PuestoModel puesto){
+        return empleadoRepository.findEmpleadosByPuesto(puesto);
+    }
+    public List<Empleado> findBySector(SectorModel sectorModel){
+        return empleadoRepository.findEmpleadosBySector(sectorModel);
+    }
+
 
 }

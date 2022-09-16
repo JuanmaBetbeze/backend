@@ -3,12 +3,14 @@ package com.example.demo.models.historial;
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.EntidadPersistente;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "historialDispositivo")
 public class HistorialDispositivo extends EntidadPersistente {
@@ -19,10 +21,13 @@ public class HistorialDispositivo extends EntidadPersistente {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     LocalDate fechaDesincronizacion;
 
-    public HistorialDispositivo(Empleado empleado, LocalDate fechaAsignacion, LocalDate fechaDesincronizacion) {
+    String ejecutor;
+
+    public HistorialDispositivo(Empleado empleado, LocalDate fechaAsignacion, LocalDate fechaDesincronizacion,String encargado) {
         this.empleado = empleado;
         this.fechaAsignacion = fechaAsignacion;
         this.fechaDesincronizacion = fechaDesincronizacion;
+        this.ejecutor =encargado;
     }
 
     public HistorialDispositivo() {
@@ -51,5 +56,13 @@ public class HistorialDispositivo extends EntidadPersistente {
 
     public LocalDate getFechaDesincronizacion() {
         return fechaDesincronizacion;
+    }
+
+    public String getEjecutor() {
+        return ejecutor;
+    }
+
+    public void setEjecutor(String encargado) {
+        this.ejecutor = encargado;
     }
 }

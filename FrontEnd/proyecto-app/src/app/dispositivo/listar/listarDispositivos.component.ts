@@ -3,7 +3,7 @@ import {Dispositivo} from '../../models/Dispositivo';
 import {TokenService} from '../../service/token.service';
 import {DispositivoService} from '../../service/dispositivo.service';
 import {TipoDispositivoService} from '../../service/TipoDispositivo.service';
-import {MarcaService} from "../../service/Marca.service";
+import {MarcaService} from '../../service/Marca.service';
 
 @Component({
   selector: 'app-listar',
@@ -19,12 +19,14 @@ export class ListarDispositivosComponent implements OnInit {
   tipos: string [];
   marcas: string [];
   filtrarList: string[] = [];
+
   constructor(
     private tokenService: TokenService,
     private dispositivoService: DispositivoService,
     private tipoService: TipoDispositivoService,
     private marcaService: MarcaService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.listarDispositivos();
@@ -37,6 +39,7 @@ export class ListarDispositivosComponent implements OnInit {
       }
     });
   }
+
   listarDispositivos(): void {
     this.dispositivoService.listarDispositivos().subscribe(data => {
         this.dispositivos = data;
@@ -45,6 +48,7 @@ export class ListarDispositivosComponent implements OnInit {
         console.log(error);
       });
   }
+
   cargarTipos(): void {
     this.tipoService.listarTipos().subscribe(
       data => {
@@ -56,6 +60,7 @@ export class ListarDispositivosComponent implements OnInit {
       }
     );
   }
+
   cargarMarcas(): void {
     this.marcaService.listarMarcas().subscribe(
       data => {
@@ -67,6 +72,7 @@ export class ListarDispositivosComponent implements OnInit {
       }
     );
   }
+
   filtrar(): void {
     this.filtrarList.push(this.filtrado);
     this.filtrarList.push(this.valor);
@@ -81,5 +87,12 @@ export class ListarDispositivosComponent implements OnInit {
       }
     );
   }
-}
 
+  cambio(): void {
+    if (this.filtrado === 'listar') {
+      this.valor = 'listar';
+    } else {
+      this.valor = '';
+    }
+  }
+}

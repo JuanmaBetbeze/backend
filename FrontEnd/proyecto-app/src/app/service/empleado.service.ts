@@ -34,11 +34,13 @@ export class EmpleadoService {
   public listarDispositivos(id: number): Observable<Dispositivo []> {
     return this.httpClient.get<Dispositivo []>(this.URL + `/dispositivos/${id}`);
   }
-  public agregarDispositivos(id: number, idDispositivo: number): Observable<any> {
-    return this.httpClient.post<any>(this.URL + `/dispositivos/asignar/${id}`, idDispositivo);
+  public agregarDispositivos(id: number, idDispositivo: number, ejecutor: string): Observable<any> {
+    return this.httpClient.post<any>(this.URL + `/dispositivos/asignar/${id}/${ejecutor}`, idDispositivo);
   }
-  public quitarDispositivo(id: number, idDispositivo: number): Observable<any> {
-    return this.httpClient.post<any>(this.URL + `/dispositivos/quitar/${id}`, idDispositivo);
+  public quitarDispositivo(id: number, idDispositivo: number, ejecutor: string): Observable<any> {
+    return this.httpClient.post<any>(this.URL + `/dispositivos/quitar/${id}/${ejecutor}`, idDispositivo);
   }
-
+  public filtrarEmpleados(filtrarlist: string[]): Observable<Empleado []> {
+    return this.httpClient.post<Empleado[]>(this.URL + '/filtrar', filtrarlist);
+  }
 }

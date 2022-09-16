@@ -9,4 +9,5 @@ export class Dispositivo {
   asegurado: boolean;
   empleadoActual?: number;
   agregar: boolean;
+  ejecutor: string;
 }

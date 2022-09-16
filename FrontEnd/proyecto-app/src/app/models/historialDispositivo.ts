@@ -8,4 +8,5 @@ export class HistorialDispositivo {
   dni: number;
   fechaAsignacion: Date;
   fechaDesincronizacion: Date;
+  ejecutor: string;
 }

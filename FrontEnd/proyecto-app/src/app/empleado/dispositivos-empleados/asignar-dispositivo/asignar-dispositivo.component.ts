@@ -15,6 +15,7 @@ export class AsignarDispositivoComponent implements OnInit {
 dispositivos: Dispositivo [] = [];
 idAAgregar: number [] = [];
 dispositivosAAgregar: Dispositivo [] = [];
+ejecutor: string;
   constructor(    private tokenService: TokenService,
                   private dispositivoService: DispositivoService,
                   private empleadoService: EmpleadoService,
@@ -36,13 +37,16 @@ dispositivosAAgregar: Dispositivo [] = [];
   onAsignar(): void {
     this.dispositivosAAgregar = this.dispositivos.filter(x => x.agregar);
     const id = this.activatedRoute.snapshot.params.id;
+    if (this.tokenService.getToken()) {
+      this.ejecutor = this.tokenService.getUserName();
+    }
     this.dispositivosAAgregar.forEach(y => this.pushear(id, y.id));
     this.router.navigate([`/empleados/${id}/dispositivos`]).then(() => {
       window.location.reload();
     });
   }
   pushear(id: number, idAAgregar: number ): void {
-    this.empleadoService.agregarDispositivos(id, idAAgregar).subscribe(data => {
+    this.empleadoService.agregarDispositivos(id, idAAgregar, this.ejecutor).subscribe(data => {
         this.toastr.success('Dispositivos agregados', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });

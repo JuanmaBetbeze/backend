@@ -11,9 +11,10 @@ public class HistorialDispositivoListar {
     int dni;
     LocalDate fechaAsignacion;
     LocalDate fechaDesincronizacion;
+    String ejecutor;
 
-
-    public HistorialDispositivoListar(String nombre, String apellido, String idEmpleado, String sector, String puesto, int dni, LocalDate fechaAsignacion, LocalDate fechaDesincronizacion) {
+    public HistorialDispositivoListar(String nombre, String apellido, String idEmpleado, String sector, String puesto,
+                                      int dni, LocalDate fechaAsignacion, LocalDate fechaDesincronizacion,String ejecutor) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.idEmpleado = idEmpleado;
@@ -22,6 +23,7 @@ public class HistorialDispositivoListar {
         this.dni = dni;
         this.fechaAsignacion = fechaAsignacion;
         this.fechaDesincronizacion = fechaDesincronizacion;
+        this.ejecutor=ejecutor;
     }
 
     public String getNombre() {
@@ -86,5 +88,13 @@ public class HistorialDispositivoListar {
 
     public void setFechaDesincronizacion(LocalDate fechaDesincronizacion) {
         this.fechaDesincronizacion = fechaDesincronizacion;
+    }
+
+    public String getEjecutor() {
+        return ejecutor;
+    }
+
+    public void setEjecutor(String ejecutor) {
+        this.ejecutor = ejecutor;
     }
 }

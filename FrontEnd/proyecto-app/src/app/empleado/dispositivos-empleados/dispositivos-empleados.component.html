@@ -35,6 +35,7 @@
       <th scope="col">marca</th>
       <th scope="col">valor</th>
       <th scope="col">asegurado</th>
+      <th scope="col">Asignado por</th>
       <th scope="col"  *ngIf="permitido">Quitar</th>
     </tr>
     </thead>
@@ -48,6 +49,7 @@
       <td>{{dispositivo.valor}}</td>
       <td *ngIf="dispositivo.asegurado">SI</td>
       <td *ngIf="!dispositivo.asegurado">NO</td>
+      <td>{{dispositivo.ejecutor}}</td>
       <td><button class="btn btn-outline-danger btn-block" (click)="quitar(dispositivo.id)"><i class="far fa-trash-alt"></i></button></td>
 
     </tr>

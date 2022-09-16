@@ -7,11 +7,13 @@ public class HistorialDispositivoNuevo {
     Long idEmpleado;
     LocalDate fechaAsignacion;
     LocalDate fechaDesincronizacion;
+    String ejecutor;
 
-    public HistorialDispositivoNuevo(Long idEmpleado, LocalDate fechaAsignacion, LocalDate fechaDesincronizacion) {
+    public HistorialDispositivoNuevo(Long idEmpleado, LocalDate fechaAsignacion, LocalDate fechaDesincronizacion, String ejecutor) {
         this.idEmpleado = idEmpleado;
         this.fechaAsignacion = fechaAsignacion;
         this.fechaDesincronizacion = fechaDesincronizacion;
+        this.ejecutor=ejecutor;
     }
 
     public Long getIdEmpleado() {
@@ -36,5 +38,13 @@ public class HistorialDispositivoNuevo {
 
     public void setFechaDesincronizacion(LocalDate fechaDesincronizacion) {
         this.fechaDesincronizacion = fechaDesincronizacion;
+    }
+
+    public String getEjecutor() {
+        return ejecutor;
+    }
+
+    public void setEjecutor(String ejecutor) {
+        this.ejecutor = ejecutor;
     }
 }

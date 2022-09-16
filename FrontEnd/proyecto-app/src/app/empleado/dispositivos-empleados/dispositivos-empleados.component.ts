@@ -17,6 +17,7 @@ export class DispositivosEmpleadosComponent implements OnInit {
   id: number;
   roles: string [];
   permitido = false;
+  ejecutor: string;
   constructor(private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
               private router: Router,
@@ -30,6 +31,9 @@ export class DispositivosEmpleadosComponent implements OnInit {
         this.permitido = true;
       }
     });
+    if (this.tokenService.getToken()) {
+      this.ejecutor = this.tokenService.getUserName();
+    }
     this.id = this.activatedRoute.snapshot.params.id;
     this.empleadoService.detail(this.id).subscribe(
       data => {
@@ -52,7 +56,7 @@ export class DispositivosEmpleadosComponent implements OnInit {
       });
   }
   quitar(idDisp: number): void {
-    this.empleadoService.quitarDispositivo(this.id, idDisp).subscribe(
+    this.empleadoService.quitarDispositivo(this.id, idDisp, this.ejecutor).subscribe(
       data => {
         this.toastr.success('Dispositivo quitado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'

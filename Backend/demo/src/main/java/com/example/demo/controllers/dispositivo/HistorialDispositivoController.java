@@ -40,7 +40,8 @@ public class HistorialDispositivoController {
             return new ResponseEntity<>( new Mensaje("campos mal puestos"), HttpStatus.BAD_REQUEST);
         }
         HistorialDispositivo historialDispositivo=new HistorialDispositivo(empleadoService.getOne(
-                historialDispositivoNuevo.getIdEmpleado()).get(),historialDispositivoNuevo.getFechaAsignacion(),historialDispositivoNuevo.getFechaDesincronizacion());
+                historialDispositivoNuevo.getIdEmpleado()).get(),historialDispositivoNuevo.getFechaAsignacion()
+                ,historialDispositivoNuevo.getFechaDesincronizacion(),historialDispositivoNuevo.getEjecutor());
         historialDispositivoService.save(historialDispositivo);
         return new ResponseEntity<>(new Mensaje("Historial agregado con exito"),HttpStatus.CREATED);
     }
@@ -53,7 +54,7 @@ public class HistorialDispositivoController {
         if(!listarHistorial.isEmpty()) {
             listarHistorial.forEach(historial -> lista.add(crearHistorialDispositivoListar(historial)));
             lista.sort(Comparator.comparing(HistorialDispositivoListar::getFechaDesincronizacion).reversed());
-            lista.stream().filter(historialDispositivoListar -> Objects.equals(historialDispositivoListar.getFechaDesincronizacion(), LocalDate.of(2500, 10, 15)))
+            lista.stream().filter(historialDispositivoListar -> Objects.equals(historialDispositivoListar.getFechaDesincronizacion(), LocalDate.of(50000, 10, 15)))
                     .forEach(historialDispositivoListar -> historialDispositivoListar.setFechaDesincronizacion(null));
         }
         return new ResponseEntity(lista, HttpStatus.OK);
@@ -62,10 +63,12 @@ public class HistorialDispositivoController {
         Empleado empleado=historialDispositivo.getEmpleado();
         if(historialDispositivo.getFechaDesincronizacion()==null) {
             return new HistorialDispositivoListar(empleado.getNombre(), empleado.getApellido(), empleado.getIdEmpleado(), empleado.getSector().getSector(),
-                    empleado.getPuesto().getPuesto(), empleado.getDni(), historialDispositivo.getFechaAsignacion(),LocalDate.of(2500,10,15));
+                    empleado.getPuesto().getPuesto(), empleado.getDni(), historialDispositivo.getFechaAsignacion(),
+                    LocalDate.of(50000,10,15),historialDispositivo.getEjecutor());
         }
         return new HistorialDispositivoListar(empleado.getNombre(), empleado.getApellido(), empleado.getIdEmpleado(), empleado.getSector().getSector(),
-                empleado.getPuesto().getPuesto(), empleado.getDni(), historialDispositivo.getFechaAsignacion(),historialDispositivo.getFechaDesincronizacion());
+                empleado.getPuesto().getPuesto(), empleado.getDni(), historialDispositivo.getFechaAsignacion()
+                ,historialDispositivo.getFechaDesincronizacion(),historialDispositivo.getEjecutor());
     }
 
 }
