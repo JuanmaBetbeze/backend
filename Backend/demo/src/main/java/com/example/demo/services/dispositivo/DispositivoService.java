@@ -1,5 +1,6 @@
 package com.example.demo.services.dispositivo;
 
+import com.example.demo.enums.EstadoDispositivo;
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.DispositivoNuevo;
 import com.example.demo.models.Dispositivo.MarcaModel;
@@ -69,6 +70,9 @@ public class DispositivoService {
     }
     public List<Dispositivo> findByEmpleadoActualNull(){
         return dispositivoRepository.findDispositivosByEmpleadoActualIsNull();
+    }
+    public List<Dispositivo> findByEstado(EstadoDispositivo estadoDispositivo){
+        return dispositivoRepository.findDispositivosByEstadoDispositivo(estadoDispositivo);
     }
 
 }

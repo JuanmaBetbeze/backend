@@ -1,5 +1,6 @@
 package com.example.demo.controllers.dispositivo;
 
+import com.example.demo.enums.EstadoDispositivo;
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.DispositivoNuevo;
 import com.example.demo.models.Dispositivo.MarcaModel;
@@ -7,10 +8,13 @@ import com.example.demo.models.Dispositivo.TipoDispositivoModel;
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.Mensaje;
 import com.example.demo.models.historial.HistorialDispositivo;
+import com.example.demo.models.historial.HistorialEmpleado;
 import com.example.demo.services.dispositivo.DispositivoService;
+import com.example.demo.services.dispositivo.HistorialDispositivoService;
 import com.example.demo.services.dispositivo.MarcaService;
 import com.example.demo.services.dispositivo.TipoDispositivoService;
 import com.example.demo.services.empleado.EmpleadoService;
+import com.example.demo.services.empleado.HistorialEmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +39,10 @@ public class DispositivoController {
 
     @Autowired
     EmpleadoService empleadoService;
+    @Autowired
+    HistorialDispositivoService historialDispositivoService;
+    @Autowired
+    HistorialEmpleadoService historialEmpleadoService;
 
     @PostMapping("dispositivo/nuevo")
     public ResponseEntity<?> nuevo(@Valid
@@ -59,7 +68,7 @@ public class DispositivoController {
     }
     @GetMapping("/dispositivo/SAsignar")
     public ResponseEntity<List<DispositivoNuevo>> listarDispositivosSinAsignar(){
-        List<Dispositivo> listaDispositivos = dispositivoService.findByEmpleadoActual(null);
+        List<Dispositivo> listaDispositivos = dispositivoService.findByEstado(EstadoDispositivo.SINASIGNAR);
         List<DispositivoNuevo> lista=new ArrayList<>();
         listaDispositivos.forEach(dispositivo -> lista.add(crearDispositivoNuevo(dispositivo)));
         return new ResponseEntity(lista, HttpStatus.OK);
@@ -68,11 +77,11 @@ public class DispositivoController {
         if (dispositivo.getEmpleadoActual()==null){
             return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
                     dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(),
-                    dispositivo.getAsegurado(), (long) 0, dispositivo.getEjecutor());
+                    dispositivo.getAsegurado(), (long) 0, dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal());
         }
         return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
                 dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(),
-                dispositivo.getValor(), dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId(), dispositivo.getEjecutor());
+                dispositivo.getValor(), dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId(), dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal());
     }
 
     @GetMapping("/dispositivo/detail/{id}")
@@ -164,6 +173,41 @@ public class DispositivoController {
         dispositivos.forEach(dispositivo -> lista.add(crearDispositivoNuevo(dispositivo)));
 
         return new ResponseEntity(lista, HttpStatus.OK);
+    }
+    @PostMapping("/dispositivo/deshabilitar/{ejecutor}")
+    public ResponseEntity<?> deshabilitarDispositivo(@Valid@RequestBody int id,@PathVariable("ejecutor")String ejecutor){
+        if (!dispositivoService.existsById((long)id))
+            return new ResponseEntity<>(new Mensaje("Ese dispositivo no existe"),HttpStatus.BAD_REQUEST);
+        Dispositivo dispositivo= dispositivoService.findDispositivo((long) id);
+        dispositivo.setEstadoDispositivo(EstadoDispositivo.DESHABILITADO);
+        if(dispositivo.getEmpleadoActual()!=null) {
+            Empleado empleado = empleadoService.getOne(dispositivo.getEmpleadoActual().getId()).get();
+            List<Dispositivo> dispositivos=empleado.getDispositivos();
+            dispositivos.remove(dispositivo);
+            empleado.setDispositivos(dispositivos);
+            empleadoService.save(empleado);
+            dispositivo.setEmpleadoActual(null);
+            List<HistorialDispositivo> historialDispositivo=dispositivo.getHistorialDispositivo();
+            List<HistorialEmpleado> historialEmpleados=empleado.getHistorialEmpleados();
+            historialDispositivo.forEach(historialDispositivo1 -> this.desasignar(historialDispositivo1,ejecutor));
+            historialEmpleados.forEach(historialEmpleado -> this.desasignar2(historialEmpleado,ejecutor));
+        }
+        dispositivoService.save(dispositivo);
+        return new ResponseEntity<>(new Mensaje("Empleado deshabilitado con exito"),HttpStatus.CREATED);
+    }
+    public void desasignar(HistorialDispositivo historialDispositivo,String ejecutor){
+        if(historialDispositivo.getFechaDesincronizacion()==null){
+            historialDispositivo.setFechaDesincronizacion(LocalDate.now());
+            historialDispositivo.setEjecutor(ejecutor);
+            historialDispositivoService.save(historialDispositivo);
+        }
+    }
+    public void desasignar2(HistorialEmpleado historialEmpleado, String ejecutor){
+        if(historialEmpleado.getFechaDesincronizacion()==null){
+            historialEmpleado.setFechaDesincronizacion(LocalDate.now());
+            historialEmpleado.setEjecutor(ejecutor);
+            historialEmpleadoService.save(historialEmpleado);
+        }
     }
 
 }

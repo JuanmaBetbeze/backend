@@ -1,5 +1,6 @@
 package com.example.demo.repositories.dispositivo;
 
+import com.example.demo.enums.EstadoDispositivo;
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.MarcaModel;
 import com.example.demo.models.Dispositivo.TipoDispositivoModel;
@@ -25,5 +26,6 @@ public interface DispositivoRepository extends JpaRepository<Dispositivo, Long> 
     List<Dispositivo> findDispositivosByEmpleadoActual(Empleado empleado);
     List<Dispositivo> findDispositivosByEmpleadoActualIsNotNull();
     List<Dispositivo> findDispositivosByEmpleadoActualIsNull();
+    List<Dispositivo> findDispositivosByEstadoDispositivo(EstadoDispositivo estadoDispositivo);
 
 }

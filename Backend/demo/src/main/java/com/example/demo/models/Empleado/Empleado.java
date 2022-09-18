@@ -2,6 +2,8 @@ package com.example.demo.models.Empleado;
 
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.EntidadPersistente;
+import com.example.demo.models.historial.HistorialDispositivo;
+import com.example.demo.models.historial.HistorialEmpleado;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,6 +26,13 @@ public class Empleado extends EntidadPersistente {
           , inverseJoinColumns = @JoinColumn(name = "dispositivo_id")
   )
   public List<Dispositivo> dispositivos=new ArrayList<>();
+  @OneToMany
+  @JoinTable(name = "historial_Empleados",
+          joinColumns = @JoinColumn(name = "empleado_id")
+          , inverseJoinColumns = @JoinColumn(name = "historialEmpleado_id")
+  )
+  List<HistorialEmpleado> historialEmpleados= new ArrayList<>();
+
 
   public Empleado() {
   }
@@ -91,5 +100,13 @@ public class Empleado extends EntidadPersistente {
 
   public void setDispositivos(List<Dispositivo> dispositivos) {
     this.dispositivos = dispositivos;
+  }
+
+  public List<HistorialEmpleado> getHistorialEmpleados() {
+    return historialEmpleados;
+  }
+
+  public void setHistorialEmpleados(List<HistorialEmpleado> historialEmpleados) {
+    this.historialEmpleados = historialEmpleados;
   }
 }

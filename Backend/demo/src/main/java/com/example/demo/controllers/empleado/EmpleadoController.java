@@ -1,5 +1,6 @@
 package com.example.demo.controllers.empleado;
 
+import com.example.demo.enums.EstadoDispositivo;
 import com.example.demo.models.Dispositivo.Dispositivo;
 import com.example.demo.models.Dispositivo.DispositivoNuevo;
 import com.example.demo.models.Dispositivo.MarcaModel;
@@ -10,9 +11,12 @@ import com.example.demo.models.Empleado.PuestoModel;
 import com.example.demo.models.Empleado.SectorModel;
 import com.example.demo.models.Mensaje;
 import com.example.demo.models.historial.HistorialDispositivo;
+import com.example.demo.models.historial.HistorialEmpleado;
+import com.example.demo.models.historial.HistorialEmpleadoNuevo;
 import com.example.demo.services.dispositivo.DispositivoService;
 import com.example.demo.services.dispositivo.HistorialDispositivoService;
 import com.example.demo.services.empleado.EmpleadoService;
+import com.example.demo.services.empleado.HistorialEmpleadoService;
 import com.example.demo.services.empleado.PuestoService;
 import com.example.demo.services.empleado.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -43,6 +48,9 @@ public class EmpleadoController {
 
     @Autowired
     HistorialDispositivoService historialDispositivoService;
+
+    @Autowired
+    HistorialEmpleadoService historialEmpleadoService;
 
     @PostMapping("empleados/nuevo")
     public ResponseEntity<?> nuevo(@Valid
@@ -102,9 +110,16 @@ public class EmpleadoController {
             return new ResponseEntity<>(new Mensaje("Ese empleado no existe"),HttpStatus.BAD_REQUEST);
         List<HistorialDispositivo> historialDispositivos=historialDispositivoService.listarHistorial();
         historialDispositivos.forEach(historialDispositivo -> this.eliminarHistorial(historialDispositivo,id));
+        Empleado empleado= empleadoService.getOne((long)id).get();
+        List<HistorialEmpleado> historialEmpleados=empleado.getHistorialEmpleados();
+        if(!historialEmpleados.isEmpty()) {
+            empleado.setHistorialEmpleados(null);
+            empleadoService.save(empleado);
+            historialEmpleados.forEach(historialEmpleado ->historialEmpleadoService.eliminar(historialEmpleado.getId()));
+        }
         List<Dispositivo>dispositivos=dispositivoService.listarDispositivos();
-        dispositivos.stream().filter(dispositivo -> dispositivo.getEmpleadoActual().getId()==id).forEach(this::setearEmpleadoActual);
-        Empleado empleado=empleadoService.getOne((long)id).get();
+        List<Dispositivo>disposotivosNotNull=dispositivos.stream().filter(dispositivo -> dispositivo.getEmpleadoActual()!=null).collect(Collectors.toList());
+        disposotivosNotNull.stream().filter(dispositivo -> dispositivo.getEmpleadoActual().getId()==id).forEach(this::setearEmpleadoActual);
         empleado.setDispositivos(null);
         empleadoService.eliminarEmpleado((long)id);
         return new ResponseEntity<>(new Mensaje("Empleado eliminado con exito"),HttpStatus.CREATED);
@@ -112,6 +127,7 @@ public class EmpleadoController {
     }
     public void setearEmpleadoActual(Dispositivo dispositivo){
         dispositivo.setEmpleadoActual(null);
+        dispositivo.setEstadoDispositivo(EstadoDispositivo.SINASIGNAR);
         dispositivoService.save(dispositivo);
     }
     public void eliminarHistorial(HistorialDispositivo historialDispositivo,int id){
@@ -140,10 +156,12 @@ public class EmpleadoController {
     public DispositivoNuevo crearDispositivoNuevo(Dispositivo dispositivo){
         if (dispositivo.getEmpleadoActual()==null){
             return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
-                    dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(), (long) 0, dispositivo.getEjecutor());
+                    dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(), (long) 0,
+                    dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal());
         }
         return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
-                dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId(),dispositivo.getEjecutor());
+                dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(),
+                dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId(),dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal());
     }
     @PostMapping("/empleados/dispositivos/asignar/{id}/{ejecutor}")
     public ResponseEntity<?> asignarDispositivos(@PathVariable("id")int id,@PathVariable("ejecutor")String ejecutor, @RequestBody int idDispositivos){
@@ -156,14 +174,21 @@ public class EmpleadoController {
         List<Dispositivo> dispositivos=empleado.getDispositivos();
         Dispositivo dispositivo=dispositivoService.findDispositivo((long)idDispositivos);
         List<HistorialDispositivo> historialDispositivos=dispositivo.getHistorialDispositivo();
+        List<HistorialEmpleado> historialEmpleados=empleado.getHistorialEmpleados();
         HistorialDispositivo nuevo=new HistorialDispositivo(empleado, LocalDate.now(),null,null);
+        historialDispositivoService.save(nuevo);
         historialDispositivos.add(nuevo);
+        HistorialEmpleado historialEmpleado=new HistorialEmpleado(dispositivo,LocalDate.now(),null,null);
+        historialEmpleadoService.save(historialEmpleado);
+
+        historialEmpleados.add(historialEmpleado);
         dispositivo.setHistorialDispositivo(historialDispositivos);
+        empleado.setHistorialEmpleados(historialEmpleados);
         dispositivo.setEmpleadoActual(empleado);
+        dispositivo.setEstadoDispositivo(EstadoDispositivo.ASIGNADO);
         dispositivo.setEjecutor(ejecutor);
         dispositivos.add(dispositivo);
         empleado.setDispositivos(dispositivos);
-        historialDispositivoService.save(nuevo);
         empleadoService.save(empleado);
         dispositivoService.save(dispositivo);
         return new ResponseEntity(new Mensaje("Dispositivo agregado"), HttpStatus.OK);
@@ -177,8 +202,11 @@ public class EmpleadoController {
         Dispositivo dispositivo=dispositivoService.findDispositivo((long)idDispositivos);
         dispositivos.remove(dispositivo);
         dispositivo.setEmpleadoActual(null);
+        dispositivo.setEstadoDispositivo(EstadoDispositivo.SINASIGNAR);
         List<HistorialDispositivo> historialDispositivo=dispositivo.getHistorialDispositivo();
+        List<HistorialEmpleado> historialEmpleados=empleado.getHistorialEmpleados();
         historialDispositivo.forEach(historialDispositivo1 -> this.desasignar(historialDispositivo1,ejecutor));
+        historialEmpleados.forEach(historialEmpleado -> this.desasignar2(historialEmpleado,ejecutor));
         empleado.setDispositivos(dispositivos);
         dispositivoService.save(dispositivo);
         empleadoService.save(empleado);
@@ -191,7 +219,13 @@ public class EmpleadoController {
             historialDispositivoService.save(historialDispositivo);
         }
     }
-
+    public void desasignar2(HistorialEmpleado historialEmpleado,String ejecutor){
+        if(historialEmpleado.getFechaDesincronizacion()==null){
+            historialEmpleado.setFechaDesincronizacion(LocalDate.now());
+            historialEmpleado.setEjecutor(ejecutor);
+            historialEmpleadoService.save(historialEmpleado);
+        }
+    }
     @PostMapping("/empleados/filtrar")
     public ResponseEntity<List<EmpleadoNuevo>> filtrar(@RequestBody List<String> filtrarList){
         String filtrado=filtrarList.get(0);

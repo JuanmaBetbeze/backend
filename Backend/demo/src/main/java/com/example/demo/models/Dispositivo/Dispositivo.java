@@ -1,5 +1,6 @@
 package com.example.demo.models.Dispositivo;
 
+import com.example.demo.enums.EstadoDispositivo;
 import com.example.demo.models.Empleado.Empleado;
 import com.example.demo.models.EntidadPersistente;
 import com.example.demo.models.historial.HistorialDispositivo;
@@ -20,6 +21,9 @@ public class Dispositivo extends EntidadPersistente {
   MarcaModel marca;
   Float valor;
   boolean asegurado;
+
+  @Enumerated
+  EstadoDispositivo estadoDispositivo;
   @OneToOne
   Empleado empleadoActual;
   @OneToMany
@@ -40,6 +44,7 @@ public class Dispositivo extends EntidadPersistente {
     this.asegurado = asegurado;
     this.empleadoActual = empleadoActual;
     this.ejecutor=ejecutor;
+    this.estadoDispositivo=EstadoDispositivo.SINASIGNAR;
   }
 
   public Dispositivo() {
@@ -123,5 +128,13 @@ public class Dispositivo extends EntidadPersistente {
 
   public void setEjecutor(String ejecutor) {
     this.ejecutor = ejecutor;
+  }
+
+  public EstadoDispositivo getEstadoDispositivo() {
+    return estadoDispositivo;
+  }
+
+  public void setEstadoDispositivo(EstadoDispositivo estadoDispositivo) {
+    this.estadoDispositivo = estadoDispositivo;
   }
 }
