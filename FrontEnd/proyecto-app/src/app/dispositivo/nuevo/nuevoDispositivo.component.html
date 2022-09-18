@@ -1,0 +1,69 @@
+<app-menu></app-menu>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-4 mx-auto">
+      <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+        <div class="form-group">
+          <label for="tipo">Tipo</label>
+          <select [(ngModel)]="dispositivo.tipo" name="tipo" id="tipo" class="form-control form-control-lg" >
+            <option selected></option>
+            <option [value]="item" *ngFor="let item of tipos">{{item}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="numeroDeSerie">Numero De Serie</label>
+          <input [(ngModel)]="dispositivo.numeroDeSerie" type="text" class="form-control form-control-lg" id="numeroDeSerie"
+                 name="numeroDeSerie" required>
+        </div>
+        <div class="form-group">
+          <label for="modelo">Modelo</label>
+          <input [(ngModel)]="dispositivo.modelo" type="text" class="form-control" id="modelo" name="modelo"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="modelo">ID</label>
+          <input [(ngModel)]="dispositivo.idDispo" type="text" class="form-control" id="idDispo" name="idDispo"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="marca">Marca</label>
+          <select [(ngModel)]="dispositivo.marca" name="marca" id="marca" class="form-control form-control-lg" >
+            <option selected></option>
+            <option [value]="item" *ngFor="let item of marcas">{{item}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="valor">Valor</label>
+          <input [(ngModel)]="dispositivo.valor" type="text" class="form-control" id="valor" name="valor"
+                 required>
+        </div>
+        <div class="form-group">
+          <label for="asegurado">Asegurado</label>
+          <br>
+          <input [(ngModel)]="dispositivo.asegurado" type=checkbox
+                 name="asegurado" id="asegurado">
+        </div>
+        <button class="btn btn-outline-success btn-block" [disabled]="!f.valid || dispositivo.tipo=='' || dispositivo.marca==''">
+          <i class="fas fa-plus-circle"></i> Crear</button>
+        <button class="btn btn-outline-primary btn-block" routerLink="/dispositivos">
+          <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div>
+  <form (ngSubmit)="onCreateTipo()" novalidate #g="ngForm">
+    <input [(ngModel)]="tipoNew" type="text" id="tipoNew" name="tipoNew" required>
+    <button class="btn btn-outline-success btn-lg" [disabled]="!g.valid">
+      <i class="fas fa-plus-circle"></i> Nuevo Tipo</button>
+  </form>
+</div>
+<br>
+<div>
+  <form (ngSubmit)="onCreateMarca()" novalidate #h="ngForm">
+    <input [(ngModel)]="marcaNew" type="text" id="marcaNew" name="marcaNew" required>
+    <button class="btn btn-outline-success btn-lg" [disabled]="!h.valid">
+      <i class="fas fa-plus-circle"></i> Nueva Marca</button>
+  </form>
+</div>
+

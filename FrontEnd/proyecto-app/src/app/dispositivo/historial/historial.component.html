@@ -1,0 +1,64 @@
+<app-menu></app-menu>
+<div class="container">
+  <table id="customers2">
+    <thead>
+    <tr>
+      <th scope="col">Tipo</th>
+      <th scope="col">Numero de serie</th>
+      <th scope="col">modelo</th>
+      <th scope="col">ID</th>
+      <th scope="col">marca</th>
+      <th scope="col">valor</th>
+      <th scope="col">asegurado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <td>{{dispositivo.tipo}}</td>
+    <td>{{dispositivo.numeroDeSerie}}</td>
+    <td>{{dispositivo.modelo}}</td>
+    <td>{{dispositivo.idDispo}}</td>
+    <td>{{dispositivo.marca}}</td>
+    <td>{{dispositivo.valor}}</td>
+    <td *ngIf="dispositivo.asegurado">SI</td>
+    <td *ngIf="!dispositivo.asegurado">NO</td>
+    </tbody>
+  </table>
+</div>
+<br>
+<br>
+<h2>Historial Empleados</h2>
+<br>
+<div class="container">
+  <table id="customers3">
+    <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">DNI</th>
+      <th scope="col">ID</th>
+      <th scope="col">Sector</th>
+      <th scope="col">Puesto</th>
+      <th scope="col">Fecha de Asignación</th>
+      <th scope="col">Fecha de desincronización</th>
+      <th scope="col">Desincronizado por</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let historialDispositivo of historialDispositivos" >
+
+      <td>{{historialDispositivo.nombre}}</td>
+      <td>{{historialDispositivo.apellido}}</td>
+      <td>{{historialDispositivo.dni}}</td>
+      <td>{{historialDispositivo.idEmpleado}}</td>
+      <td>{{historialDispositivo.sector}}</td>
+      <td>{{historialDispositivo.puesto}}</td>
+      <td>{{historialDispositivo.fechaAsignacion}}</td>
+      <td *ngIf="historialDispositivo.fechaDesincronizacion!=null">{{historialDispositivo.fechaDesincronizacion}}</td>
+      <td *ngIf="historialDispositivo.fechaDesincronizacion==null">VIGENTE</td>
+      <td *ngIf="historialDispositivo.ejecutor==null">-</td>
+      <td *ngIf="historialDispositivo.ejecutor!=null">{{historialDispositivo.ejecutor}}</td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
