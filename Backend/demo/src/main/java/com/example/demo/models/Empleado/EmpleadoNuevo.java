@@ -1,5 +1,4 @@
 package com.example.demo.models.Empleado;
-
 public class EmpleadoNuevo {
     int id;
     String nombre;
@@ -17,6 +16,9 @@ public class EmpleadoNuevo {
         this.sector = sector;
         this.puesto = puesto;
         this.dni = dni;
+    }
+
+    public EmpleadoNuevo() {
     }
 
     public String getNombre() {

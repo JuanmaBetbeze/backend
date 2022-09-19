@@ -27,11 +27,9 @@ const routes: Routes = [
   { path: 'usuarios/nuevo', component: NuevoProductoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN'] } },
   {path: 'empleados', component: EmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
   {path: 'empleados/nuevo', component: NuevoEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
-  {path: 'dispositivos', component: ListarDispositivosComponent, canActivate: [guard], data:
-      { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
+  {path: 'dispositivos', component: ListarDispositivosComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
   {path: 'dispositivos/nuevo', component: NuevoDispositivoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
-  // { path: 'detalle/:id', component: DetalleProductoComponent, canActivate: [guard], data: { expectedRol: ['admin', 'user'] } },
-   { path: 'empleados/:id/editar', component: EditarEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
+  { path: 'empleados/:id/editar', component: EditarEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
   { path: 'dispositivos/:id/editar', component: EditarComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
   { path: 'empleados/:id/dispositivos', component: DispositivosEmpleadosComponent, canActivate: [guard],
     data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] } },

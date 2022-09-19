@@ -166,6 +166,10 @@ public class DispositivoController {
                 dispositivos=dispositivoService.findByEmpleadoActualNull();
             }
         }
+        if(Objects.equals(filtrado,"deshabilitado")){
+            boolean valorBoolean=Objects.equals(valor,"SI");
+            dispositivos=dispositivoService.findByDeshabilitado(valorBoolean);
+        }
         if (Objects.equals(filtrado,"listar")){
             dispositivos=dispositivoService.listarDispositivos();
         }

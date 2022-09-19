@@ -74,5 +74,11 @@ public class DispositivoService {
     public List<Dispositivo> findByEstado(EstadoDispositivo estadoDispositivo){
         return dispositivoRepository.findDispositivosByEstadoDispositivo(estadoDispositivo);
     }
+    public List<Dispositivo> findByDeshabilitado(boolean valor){
+        if(valor){
+            return dispositivoRepository.findDispositivosByEstadoDispositivo(EstadoDispositivo.DESHABILITADO);
+        }
+        return dispositivoRepository.findDispositivosByEstadoDispositivoNot(EstadoDispositivo.DESHABILITADO);
+    }
 
 }

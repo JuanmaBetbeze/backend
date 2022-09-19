@@ -26,6 +26,8 @@ public interface DispositivoRepository extends JpaRepository<Dispositivo, Long> 
     List<Dispositivo> findDispositivosByEmpleadoActual(Empleado empleado);
     List<Dispositivo> findDispositivosByEmpleadoActualIsNotNull();
     List<Dispositivo> findDispositivosByEmpleadoActualIsNull();
+    List<Dispositivo> findDispositivosByEstadoDispositivoNot(EstadoDispositivo estadoDispositivo);
     List<Dispositivo> findDispositivosByEstadoDispositivo(EstadoDispositivo estadoDispositivo);
+
 
 }

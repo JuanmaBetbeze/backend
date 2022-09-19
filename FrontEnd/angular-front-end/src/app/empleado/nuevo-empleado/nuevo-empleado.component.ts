@@ -4,7 +4,7 @@ import {PuestoService} from '../../service/puesto.service';
 import {ToastrService} from 'ngx-toastr';
 import {TokenService} from '../../service/token.service';
 import {Router} from '@angular/router';
-import {Empleado} from '../../models/empleado';
+import {EmpleadoNuevo} from '../../models/EmpleadoNuevo';
 import {EmpleadoService} from '../../service/empleado.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class NuevoEmpleadoComponent implements OnInit {
   puestoNew: string='';
   sectores: string []=[];
   puestos: string []=[];
-  empleado: Empleado = new Empleado('','','','','',0);
+  empleado: EmpleadoNuevo = new EmpleadoNuevo('','','','','',0);
   constructor(private sectorService: SectorService,
               private puestoService: PuestoService,
               private empleadoService: EmpleadoService,
@@ -33,7 +33,7 @@ export class NuevoEmpleadoComponent implements OnInit {
   }
   onCreate(): void {
     this.empleadoService.nuevo(this.empleado).subscribe(data => {
-        this.toastr.success('Empleado Creado', 'OK', {
+        this.toastr.success('EmpleadoNuevo Creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/empleados']);

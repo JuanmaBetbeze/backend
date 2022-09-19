@@ -1,4 +1,4 @@
-export class Dispositivo {
+export class DispositivoNuevo {
   id: number;
   tipo: string;
   numeroDeSerie: string;

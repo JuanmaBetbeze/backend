@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NuevoUsuario } from '../models/nuevo-usuario';
+import { NuevoUsuario } from '../models/NuevoUsuario';
 import { Observable } from 'rxjs';
 import { LoginUsuario } from '../models/login-usuario';
 import { JwtDTO } from '../models/jwt-dto';

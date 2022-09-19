@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Empleado} from '../../models/empleado';
+import {EmpleadoNuevo} from '../../models/EmpleadoNuevo';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EmpleadoService} from '../../service/empleado.service';
@@ -12,7 +12,7 @@ import {SectorService} from '../../service/sector.service';
   styleUrls: ['./editar-empleado.component.css']
 })
 export class EditarEmpleadoComponent implements OnInit {
-  empleado: Empleado = new Empleado('','','','','',-1);
+  empleado: EmpleadoNuevo = new EmpleadoNuevo('','','','','',-1);
   sectores: string []=[];
   puestos: string []=[];
 
@@ -44,7 +44,7 @@ export class EditarEmpleadoComponent implements OnInit {
     const id = this.activatedRoute.snapshot.params['id'];
     this.empleadoService.update(id, this.empleado).subscribe(
       data => {
-        this.toastr.success('Empleado Actualizado', 'OK', {
+        this.toastr.success('EmpleadoNuevo Actualizado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/empleados']);

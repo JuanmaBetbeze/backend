@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from '../service/token.service';
-import {Dispositivo} from '../models/Dispositivo';
+import {DispositivoNuevo} from '../models/DispositivoNuevo';
 import {DispositivoService} from '../service/dispositivo.service';
 import {TipoDispositivoService} from '../service/TipoDispositivo.service';
 import {MarcaService} from '../service/Marca.service';
-import {Empleado} from '../models/empleado';
+import {EmpleadoNuevo} from '../models/EmpleadoNuevo';
 import {EmpleadoService} from '../service/empleado.service';
 import {PuestoService} from '../service/puesto.service';
 import {SectorService} from '../service/sector.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-index',
@@ -18,7 +20,7 @@ export class IndexComponent implements OnInit {
 
   isLogged = false;
   nombreUsuario = '';
-  dispositivos: Dispositivo []=[];
+  dispositivos: DispositivoNuevo []=[];
   permitido = false;
   roles: string []=[];
   filtrado = '';
@@ -27,7 +29,7 @@ export class IndexComponent implements OnInit {
   marcas: string []=[];
   filtrarList: string[] = [];
   categoria = '';
-  empleados: Empleado [] = [];
+  empleados: EmpleadoNuevo [] = [];
   puestos: string[]=[];
   sectores: string[]=[];
 
@@ -159,5 +161,30 @@ export class IndexComponent implements OnInit {
       }
     );
   }
+  downloadPDF(): void {
+      const DATA = document.getElementById('htmlData');
+    const doc = new jsPDF('p', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+    // @ts-ignore
+    html2canvas(DATA, options).then((canvas) => {
+
+      const img = canvas.toDataURL('image/PNG');
+
+      // Add image Canvas to PDF
+      const bufferX = 15;
+      const bufferY = 15;
+      const imgProps = (doc as any).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+      return doc;
+    }).then((docResult) => {
+      docResult.save(`${new Date().toISOString()}_tutorial.pdf`);
+    });
+  }
+
 
 }

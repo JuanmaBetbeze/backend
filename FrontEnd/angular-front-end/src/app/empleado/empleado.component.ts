@@ -3,7 +3,7 @@ import {ToastrService} from 'ngx-toastr';
 import {TokenService} from '../service/token.service';
 import {Router} from '@angular/router';
 import {EmpleadoService} from '../service/empleado.service';
-import {Empleado} from '../models/empleado';
+import {EmpleadoNuevo} from '../models/EmpleadoNuevo';
 import {SectorService} from '../service/sector.service';
 import {PuestoService} from '../service/puesto.service';
 
@@ -15,7 +15,7 @@ import {PuestoService} from '../service/puesto.service';
 export class EmpleadoComponent implements OnInit {
   permitido = false;
   roles: string[]=[];
-  empleados: Empleado [] = [];
+  empleados: EmpleadoNuevo [] = [];
   filtrado = '';
   valor = '';
   filtrarList: string[] = [];

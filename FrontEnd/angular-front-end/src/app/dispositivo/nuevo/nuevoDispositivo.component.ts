@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Dispositivo} from '../../models/Dispositivo';
+import {DispositivoNuevo} from '../../models/DispositivoNuevo';
 import {ToastrService} from 'ngx-toastr';
 import {TokenService} from '../../service/token.service';
 import {Router} from '@angular/router';
@@ -13,7 +13,7 @@ import {DispositivoService} from '../../service/dispositivo.service';
   styleUrls: ['./nuevoDispositivo.component.css']
 })
 export class NuevoDispositivoComponent implements OnInit {
-  dispositivo: Dispositivo = new Dispositivo('','','','','',0,
+  dispositivo: DispositivoNuevo = new DispositivoNuevo('','','','','',0,
     false,0,false,'',0);
   tipos: string []=[];
   marcas: string []=[];
@@ -32,7 +32,7 @@ export class NuevoDispositivoComponent implements OnInit {
   }
   onCreate(): void {
     this.dispositivosService.nuevo(this.dispositivo).subscribe(data => {
-        this.toastr.success('Dispositivo Creado', 'OK', {
+        this.toastr.success('DispositivoNuevo Creado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dispositivos']);

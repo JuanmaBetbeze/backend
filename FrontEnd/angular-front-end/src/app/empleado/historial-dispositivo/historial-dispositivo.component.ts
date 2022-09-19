@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Empleado} from "../../models/empleado";
+import {EmpleadoNuevo} from "../../models/EmpleadoNuevo";
 import {HistorialEmpleado} from "../../models/historialEmpleado";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
@@ -13,7 +13,7 @@ import {HistorialEmpleadoService} from "../../service/historialEmpleado.service"
   styleUrls: ['./historial-dispositivo.component.css']
 })
 export class HistorialDispositivoComponent implements OnInit {
-  empleado: Empleado = new Empleado('','','','','',0);
+  empleado: EmpleadoNuevo = new EmpleadoNuevo('','','','','',0);
   historialEmpleados: HistorialEmpleado [] =[];
   id: number=0;
 

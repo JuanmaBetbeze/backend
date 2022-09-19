@@ -3,7 +3,7 @@ import { UsuarioService } from '../../service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import {Usuario} from '../../models/Usuario';
-import {NuevoUsuario} from '../../models/nuevo-usuario';
+import {NuevoUsuario} from '../../models/NuevoUsuario';
 
 @Component({
   selector: 'app-nuevo-producto',

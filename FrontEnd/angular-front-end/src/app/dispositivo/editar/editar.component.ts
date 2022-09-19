@@ -5,7 +5,7 @@ import {DispositivoService} from '../../service/dispositivo.service';
 import {ToastrService} from 'ngx-toastr';
 import {TokenService} from '../../service/token.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Dispositivo} from '../../models/Dispositivo';
+import {DispositivoNuevo} from '../../models/DispositivoNuevo';
 
 @Component({
   selector: 'app-editar',
@@ -13,7 +13,7 @@ import {Dispositivo} from '../../models/Dispositivo';
   styleUrls: ['./editar.component.css']
 })
 export class EditarComponent implements OnInit {
-  dispositivo: Dispositivo = new Dispositivo('','','','','',0,false,
+  dispositivo: DispositivoNuevo = new DispositivoNuevo('','','','','',0,false,
     0,false,'',0);
   tipos: string []=[];
   marcas: string []=[];
@@ -51,7 +51,7 @@ export class EditarComponent implements OnInit {
   onUpdate(): void {
     const id = this.activatedRoute.snapshot.params['id'];
     this.dispositivosService.update(id, this.dispositivo).subscribe(data => {
-        this.toastr.success('Dispositivo actualizado', 'OK', {
+        this.toastr.success('DispositivoNuevo actualizado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dispositivos']);
@@ -88,7 +88,7 @@ export class EditarComponent implements OnInit {
   borrar(): void {
     this.dispositivosService.delete(this.dispositivo.id).subscribe(
       data => {
-        this.toastr.success('Dispositivo Eliminado', 'OK', {
+        this.toastr.success('DispositivoNuevo Eliminado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dispositivos']).then(() => {
@@ -105,7 +105,7 @@ export class EditarComponent implements OnInit {
   deshabilitar(): void {
     this.dispositivosService.deshabilitar(this.dispositivo.id,this.ejecutor).subscribe(
       data => {
-        this.toastr.success('Dispositivo Deshabilitado', 'OK', {
+        this.toastr.success('DispositivoNuevo Deshabilitado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dispositivos']).then(() => {

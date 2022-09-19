@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Dispositivo} from '../../../models/Dispositivo';
+import {DispositivoNuevo} from '../../../models/DispositivoNuevo';
 import {TokenService} from '../../../service/token.service';
 import {DispositivoService} from '../../../service/dispositivo.service';
 import {EmpleadoService} from '../../../service/empleado.service';
@@ -12,9 +12,9 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./asignar-dispositivo.component.css']
 })
 export class AsignarDispositivoComponent implements OnInit {
-dispositivos: Dispositivo [] = [];
+dispositivos: DispositivoNuevo [] = [];
 idAAgregar: number [] = [];
-dispositivosAAgregar: Dispositivo [] = [];
+dispositivosAAgregar: DispositivoNuevo [] = [];
 ejecutor: string='';
   constructor(    private tokenService: TokenService,
                   private dispositivoService: DispositivoService,

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Empleado} from '../../models/empleado';
+import {EmpleadoNuevo} from '../../models/EmpleadoNuevo';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EmpleadoService} from '../../service/empleado.service';
 import {TokenService} from '../../service/token.service';
-import {Dispositivo} from '../../models/Dispositivo';
+import {DispositivoNuevo} from '../../models/DispositivoNuevo';
 import {DispositivoService} from '../../service/dispositivo.service';
 import {HistorialDispositivo} from '../../models/historialDispositivo';
 import {HistorialDispositivoService} from '../../service/HistorialDispositivo.service';
@@ -15,7 +15,7 @@ import {HistorialDispositivoService} from '../../service/HistorialDispositivo.se
   styleUrls: ['./historial.component.css']
 })
 export class HistorialComponent implements OnInit {
-  dispositivo: Dispositivo = new Dispositivo('','','','','',-1,false,-1,
+  dispositivo: DispositivoNuevo = new DispositivoNuevo('','','','','',-1,false,-1,
     false,'',0);
   id: number = -1;
   historialDispositivos: HistorialDispositivo [] = [];

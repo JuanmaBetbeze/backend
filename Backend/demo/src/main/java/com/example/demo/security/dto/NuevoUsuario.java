@@ -19,6 +19,9 @@ public class NuevoUsuario {
         this.roles = roles;
     }
 
+    public NuevoUsuario() {
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
     }

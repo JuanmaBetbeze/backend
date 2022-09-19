@@ -3,7 +3,6 @@
   <div class="form-group col-md-4">
     <p>Categoría:
       <select [(ngModel)]="categoria" class="form-control" (change)="cambioCategoria()">
-        <option value="category" selected>Seleccione una categoría</option>
         <option value="dispositivo">Dispositivo</option>
         <option value="empleado">Empleado</option>
       </select>
@@ -22,6 +21,7 @@
         <option value="valor">Valor</option>
         <option value="asegurado">Asegurado</option>
         <option value="duenio">Asignado</option>
+        <option value="deshabilitado">Deshabilitado</option>
       </select>
     </p>
   </div>
@@ -71,16 +71,23 @@
     </p>
     <p [hidden]="filtrado != 'asegurado'">Asegurado:
       <select [(ngModel)]="valor" name="tipo" class="form-control" id="asegurado" >
-        <option selected>Seleccione una opción </option>
+        <option selected value="">Seleccione una opción </option>
         <option value="SI"> SI </option>
         <option value="NO"> NO </option>
       </select>
     </p>
     <p [hidden]="filtrado != 'duenio'">Asginado:
       <select [(ngModel)]="valor" name="tipo" class="form-control" id="asignado" >
-        <option selected>Seleccione una opción </option>
+        <option selected value="">Seleccione una opción </option>
         <option value="asignado"> Asignado </option>
         <option value="sinasignar"> Sin asignar </option>
+      </select>
+    </p>
+    <p [hidden]="filtrado != 'deshabilitado'">Deshabilitado:
+      <select [(ngModel)]="valor" name="tipo" class="form-control" id="deshabilitado" >
+        <option selected value="">Seleccione una opción </option>
+        <option value="SI"> SI </option>
+        <option value="NO"> NO </option>
       </select>
     </p>
     <p [hidden]="filtrado != 'sector'">Sector:
@@ -117,7 +124,7 @@
 <button style="width: 150px;height: 70px" class="btn btn-outline-success btn-block" [disabled]="filtrado=='' || valor=='' || categoria=='category'" (click)="filtrar()">
   <i class="fas fa-plus-circle"></i> Filtrar</button>
 
-
+<div id="htmlData">
 <div class="container" [hidden]="categoria != 'dispositivo'">
   <h1>Dispositivos</h1>
   <table id="customers" >
@@ -144,8 +151,9 @@
       <td>{{dispositivo.valor}}</td>
       <td *ngIf="dispositivo.asegurado">SI</td>
       <td *ngIf="!dispositivo.asegurado">NO</td>
-      <td *ngIf="dispositivo.empleadoActual==0">SIN ASIGNAR</td>
-      <td *ngIf="dispositivo.empleadoActual!=0">ASIGNADO</td>
+      <td *ngIf="dispositivo.estado==0">SIN ASIGNAR</td>
+      <td *ngIf="dispositivo.estado==1">ASIGNADO</td>
+      <td *ngIf="dispositivo.estado==2">DESHABILITADO</td>
       <td> <li>
         <a routerLink="/dispositivos/{{dispositivo.id}}/historial"><i class="fa fa-mobile"></i> Ver</a>
       </li>
@@ -187,4 +195,8 @@
   </table>
   <br>
 </div>
-
+</div>
+<div class="container" [hidden]="categoria != 'empleado' && categoria!='dispositivo'" >
+<button class="btn btn-outline-success btn-lg" (click)="downloadPDF()" style="margin: 10px" >
+  <i class="fas fa-plus-circle"></i> Descargar PDF</button>
+</div>

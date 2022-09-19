@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EmpleadoService} from '../../service/empleado.service';
-import {Empleado} from '../../models/empleado';
-import {Dispositivo} from '../../models/Dispositivo';
+import {EmpleadoNuevo} from '../../models/EmpleadoNuevo';
+import {DispositivoNuevo} from '../../models/DispositivoNuevo';
 import {TokenService} from '../../service/token.service';
 
 @Component({
@@ -12,8 +12,8 @@ import {TokenService} from '../../service/token.service';
   styleUrls: ['./dispositivos-empleados.component.css']
 })
 export class DispositivosEmpleadosComponent implements OnInit {
-  empleado: Empleado = new Empleado('','','','','',0);
-  dispositivos: Dispositivo []=[];
+  empleado: EmpleadoNuevo = new EmpleadoNuevo('','','','','',0);
+  dispositivos: DispositivoNuevo []=[];
   id: number=-1;
   roles: string []=[];
   permitido = false;
@@ -58,7 +58,7 @@ export class DispositivosEmpleadosComponent implements OnInit {
   quitar(idDisp: number): void {
     this.empleadoService.quitarDispositivo(this.id, idDisp, this.ejecutor).subscribe(
       data => {
-        this.toastr.success('Dispositivo quitado', 'OK', {
+        this.toastr.success('DispositivoNuevo quitado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         window.location.reload();

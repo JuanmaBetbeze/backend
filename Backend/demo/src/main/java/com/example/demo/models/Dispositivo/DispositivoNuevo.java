@@ -1,8 +1,6 @@
 package com.example.demo.models.Dispositivo;
 
 
-import com.example.demo.models.Empleado.Empleado;
-
 public class DispositivoNuevo {
     Long id;
     String tipo;
@@ -29,6 +27,9 @@ public class DispositivoNuevo {
         this.empleadoActual=empleadoActual;
         this.ejecutor=ejecutor;
         this.estado=estado;
+    }
+
+    public DispositivoNuevo() {
     }
 
 
