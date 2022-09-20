@@ -57,8 +57,10 @@
       <td *ngIf="historialDispositivo.fechaDesincronizacion==null">VIGENTE</td>
       <td *ngIf="historialDispositivo.ejecutor==null">-</td>
       <td *ngIf="historialDispositivo.ejecutor!=null">{{historialDispositivo.ejecutor}}</td>
-
     </tr>
     </tbody>
   </table>
+  <button class="btn btn-outline-primary btn-block" routerLink="/dispositivos">
+    <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
 </div>
+

@@ -14,7 +14,7 @@ import {DispositivoService} from '../../service/dispositivo.service';
 })
 export class NuevoDispositivoComponent implements OnInit {
   dispositivo: DispositivoNuevo = new DispositivoNuevo('','','','','',0,
-    false,0,false,'',0);
+    false,0,false,'',0,"");
   tipos: string []=[];
   marcas: string []=[];
   tipoNew: string='';

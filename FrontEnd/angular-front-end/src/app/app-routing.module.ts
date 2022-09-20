@@ -16,6 +16,7 @@ import {
 import {EditarComponent} from './dispositivo/editar/editar.component';
 import {HistorialComponent} from './dispositivo/historial/historial.component';
 import {HistorialDispositivoComponent} from "./empleado/historial-dispositivo/historial-dispositivo.component";
+import {DeshabilitadoComponent} from "./dispositivo/deshabilitado/deshabilitado.component";
 
 
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'empleados', component: EmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
   {path: 'empleados/nuevo', component: NuevoEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
   {path: 'dispositivos', component: ListarDispositivosComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
+  {path: 'dispositivos/deshabilitados', component: DeshabilitadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR', 'OBSERVER'] }},
   {path: 'dispositivos/nuevo', component: NuevoDispositivoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] }},
   { path: 'empleados/:id/editar', component: EditarEmpleadoComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },
   { path: 'dispositivos/:id/editar', component: EditarComponent, canActivate: [guard], data: { expectedRol: ['ADMIN', 'EDITOR'] } },

@@ -1,4 +1,5 @@
 <app-menu></app-menu>
+<div id="htmlData">
 <div class="container">
 <table id="customers">
   <thead>
@@ -57,12 +58,13 @@
   </table>
   <br>
   <br>
-
+  </div>
+</div>
   <button  *ngIf="permitido" class="btn btn-outline-primary "  style="color: green;border-color: green" routerLink="/empleados/{{empleado.id}}/dispositivos/nuevo">
     <i class="fas fa-plus-circle"></i> Asginar dispositivo</button>
-
+<button class="btn btn-outline-primary" (click)="downloadPDF()" style="margin: 10px;color: green;border-color: green" >
+  <i class="fas fa-plus-circle"></i> Descargar PDF</button>
   <button class="btn btn-outline-primary" style="margin-left: 10px" routerLink="/empleados">
       <i class="fas fa-arrow-alt-circle-left " ></i> Volver</button>
 
 
-</div>

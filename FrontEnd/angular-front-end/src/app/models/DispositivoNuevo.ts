@@ -11,9 +11,10 @@ export class DispositivoNuevo {
   agregar: boolean;
   ejecutor: string;
   estado: number;
+  motivo: string;
 
   constructor(tipo: string, numeroDeSerie: string, modelo: string, idDispo: string, marca: string, valor: number,
-              asegurado: boolean, empleadoActual: number, agregar: boolean, ejecutor: string, estado: number) {
+              asegurado: boolean, empleadoActual: number, agregar: boolean, ejecutor: string, estado: number,motivo: string) {
     this.tipo = tipo;
     this.numeroDeSerie = numeroDeSerie;
     this.modelo = modelo;
@@ -26,5 +27,6 @@ export class DispositivoNuevo {
     this.ejecutor = ejecutor;
     this.id=0;
     this.estado=estado;
+    this.motivo=motivo;
   }
 }

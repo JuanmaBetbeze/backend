@@ -45,11 +45,18 @@
         </div>
         <button class="btn btn-outline-success btn-block" [disabled]="!f.valid || dispositivo.tipo=='' || dispositivo.marca==''">
           <i class="fas fa-plus-circle"></i> Actualizar</button>
-        <button class="btn btn-outline-danger btn-block" (click)="deshabilitar()"><i class="far fa fa-archive"></i> Deshabilitar</button>
+      </form>
+        <button class="btn btn-outline-danger btn-block" [hidden]="dispositivo.estado==2 || desabilitar==true" (click)="desabilitar=true"><i class="far fa fa-archive"></i> Deshabilitar</button>
+        <div [hidden]="desabilitar==false">
+        <label for="valor">Motivo</label>
+        <input [(ngModel)]="motivo" type="text" class="form-control" id="motivo" name="motivo">
+        <button class="btn btn-outline-danger btn-block" [hidden]="dispositivo.estado==2" [disabled]="motivo==''" (click)="deshabilitar()"><i class="far fa fa-archive"></i> Confirmar</button>
+        </div>
+        <button class="btn btn-outline-danger btn-block" [hidden]="dispositivo.estado!=2" (click)="habilitar()"><i class="far fa fa-archive"></i> Habilitar</button>
+
         <button class="btn btn-outline-danger btn-block" (click)="borrar()"><i class="far fa-trash-alt"></i> Eliminar</button>
         <button class="btn btn-outline-primary btn-block" routerLink="/dispositivos">
           <i class="fas fa-arrow-alt-circle-left"></i> Volver</button>
-      </form>
     </div>
   </div>
 </div>

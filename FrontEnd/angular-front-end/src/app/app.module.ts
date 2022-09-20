@@ -28,6 +28,7 @@ import { AsignarDispositivoComponent } from './empleado/dispositivos-empleados/a
 import { EditarComponent } from './dispositivo/editar/editar.component';
 import { HistorialComponent } from './dispositivo/historial/historial.component';
 import { HistorialDispositivoComponent } from './empleado/historial-dispositivo/historial-dispositivo.component';
+import { DeshabilitadoComponent } from './dispositivo/deshabilitado/deshabilitado.component';
 
 
 
@@ -51,7 +52,8 @@ import { HistorialDispositivoComponent } from './empleado/historial-dispositivo/
     AsignarDispositivoComponent,
     EditarComponent,
     HistorialComponent,
-    HistorialDispositivoComponent
+    HistorialDispositivoComponent,
+    DeshabilitadoComponent
   ],
   imports: [
     BrowserModule,

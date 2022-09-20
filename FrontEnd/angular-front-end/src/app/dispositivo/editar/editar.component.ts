@@ -14,11 +14,12 @@ import {DispositivoNuevo} from '../../models/DispositivoNuevo';
 })
 export class EditarComponent implements OnInit {
   dispositivo: DispositivoNuevo = new DispositivoNuevo('','','','','',0,false,
-    0,false,'',0);
+    0,false,'',0,'');
   tipos: string []=[];
   marcas: string []=[];
   ejecutor: string='';
-
+  motivo: string='';
+  desabilitar = false;
   constructor(private activatedRoute: ActivatedRoute,
               private tipoDispositivo: TipoDispositivoService,
               private marcaService: MarcaService,
@@ -51,7 +52,7 @@ export class EditarComponent implements OnInit {
   onUpdate(): void {
     const id = this.activatedRoute.snapshot.params['id'];
     this.dispositivosService.update(id, this.dispositivo).subscribe(data => {
-        this.toastr.success('DispositivoNuevo actualizado', 'OK', {
+        this.toastr.success('Dispositivo actualizado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dispositivos']);
@@ -88,7 +89,7 @@ export class EditarComponent implements OnInit {
   borrar(): void {
     this.dispositivosService.delete(this.dispositivo.id).subscribe(
       data => {
-        this.toastr.success('DispositivoNuevo Eliminado', 'OK', {
+        this.toastr.success('Dispositivo Eliminado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dispositivos']).then(() => {
@@ -103,9 +104,26 @@ export class EditarComponent implements OnInit {
     );
   }
   deshabilitar(): void {
-    this.dispositivosService.deshabilitar(this.dispositivo.id,this.ejecutor).subscribe(
+    this.dispositivosService.deshabilitar(this.dispositivo.id,this.ejecutor,this.motivo).subscribe(
       data => {
-        this.toastr.success('DispositivoNuevo Deshabilitado', 'OK', {
+        this.toastr.success('Dispositivo Deshabilitado', 'OK', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        this.router.navigate(['/dispositivos']).then(() => {
+          window.location.reload();
+        });
+      },
+      err => {
+        this.toastr.error(err.error.mensaje, 'Fail', {
+          timeOut: 3000, positionClass: 'toast-top-center',
+        });
+      }
+    );
+  }
+  habilitar(): void {
+    this.dispositivosService.habilitar(this.dispositivo.id).subscribe(
+      data => {
+        this.toastr.success('Dispositivo Habilitado', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dispositivos']).then(() => {

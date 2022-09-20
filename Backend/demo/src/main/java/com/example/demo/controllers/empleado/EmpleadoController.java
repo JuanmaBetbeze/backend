@@ -117,7 +117,7 @@ public class EmpleadoController {
             empleadoService.save(empleado);
             historialEmpleados.forEach(historialEmpleado ->historialEmpleadoService.eliminar(historialEmpleado.getId()));
         }
-        List<Dispositivo>dispositivos=dispositivoService.listarDispositivos();
+        List<Dispositivo>dispositivos=dispositivoService.findByDeshabilitado(false);
         List<Dispositivo>disposotivosNotNull=dispositivos.stream().filter(dispositivo -> dispositivo.getEmpleadoActual()!=null).collect(Collectors.toList());
         disposotivosNotNull.stream().filter(dispositivo -> dispositivo.getEmpleadoActual().getId()==id).forEach(this::setearEmpleadoActual);
         empleado.setDispositivos(null);
@@ -131,7 +131,7 @@ public class EmpleadoController {
         dispositivoService.save(dispositivo);
     }
     public void eliminarHistorial(HistorialDispositivo historialDispositivo,int id){
-        List<Dispositivo> dispositivos=dispositivoService.listarDispositivos();
+        List<Dispositivo> dispositivos=dispositivoService.findByDeshabilitado(false);
         if(historialDispositivo.getEmpleado().getId().intValue()==id) {
             dispositivos.forEach(dispositivo->quitarHistorial(dispositivo,historialDispositivo));
             historialDispositivoService.eliminar(historialDispositivo.getId());
@@ -157,11 +157,12 @@ public class EmpleadoController {
         if (dispositivo.getEmpleadoActual()==null){
             return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
                     dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(), dispositivo.getAsegurado(), (long) 0,
-                    dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal());
+                    dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal(),dispositivo.getMotivo());
         }
         return new DispositivoNuevo(dispositivo.getId(),dispositivo.getTipo().getTipo(),dispositivo.getNumeroDeSerie(),
                 dispositivo.getModelo(),dispositivo.getIdDispo(),dispositivo.getMarca().getMarca(), dispositivo.getValor(),
-                dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId(),dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal());
+                dispositivo.getAsegurado(),dispositivo.getEmpleadoActual().getId(),dispositivo.getEjecutor(),dispositivo.getEstadoDispositivo().ordinal(),
+                dispositivo.getMotivo());
     }
     @PostMapping("/empleados/dispositivos/asignar/{id}/{ejecutor}")
     public ResponseEntity<?> asignarDispositivos(@PathVariable("id")int id,@PathVariable("ejecutor")String ejecutor, @RequestBody int idDispositivos){

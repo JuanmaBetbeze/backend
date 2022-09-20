@@ -25,9 +25,6 @@ public class DispositivoService {
     public void save(Dispositivo dispositivo){
         dispositivoRepository.save(dispositivo);
     }
-    public List<Dispositivo> listarDispositivos(){
-        return dispositivoRepository.findAll();
-    }
     public Dispositivo findDispositivo(Long id){
         return dispositivoRepository.findById(id).get();
     }
@@ -61,9 +58,6 @@ public class DispositivoService {
     }
     public List<Dispositivo> findByAsegurado(boolean asegurado){
         return dispositivoRepository.findDispositivosByAsegurado(asegurado);
-    }
-    public List<Dispositivo> findByEmpleadoActual(Empleado empleado){
-        return dispositivoRepository.findDispositivosByEmpleadoActual(empleado);
     }
     public List<Dispositivo> findByEmpleadoActualNotNull(){
         return dispositivoRepository.findDispositivosByEmpleadoActualIsNotNull();

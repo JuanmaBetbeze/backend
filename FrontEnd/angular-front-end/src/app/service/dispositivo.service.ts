@@ -33,7 +33,10 @@ export class DispositivoService {
   public filtrarDispositivo(filtrarlist: string[]): Observable<DispositivoNuevo []> {
     return this.httpClient.post<DispositivoNuevo[]>(this.URL + '/filtrar', filtrarlist);
   }
-  public deshabilitar(id: number | undefined,ejecutor: string):Observable<any> {
-    return this.httpClient.post(this.URL + `/deshabilitar/${ejecutor}`,id )
+  public deshabilitar(id: number | undefined,ejecutor: string,motivo: string):Observable<any> {
+    return this.httpClient.post(this.URL + `/deshabilitar/${id}/${ejecutor}`,motivo )
+  }
+  public habilitar(id: number | undefined):Observable<any> {
+    return this.httpClient.post(this.URL + `/habilitar`,id )
   }
 }

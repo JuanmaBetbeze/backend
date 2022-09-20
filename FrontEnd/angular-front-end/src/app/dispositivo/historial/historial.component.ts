@@ -16,7 +16,7 @@ import {HistorialDispositivoService} from '../../service/HistorialDispositivo.se
 })
 export class HistorialComponent implements OnInit {
   dispositivo: DispositivoNuevo = new DispositivoNuevo('','','','','',-1,false,-1,
-    false,'',0);
+    false,'',0,'');
   id: number = -1;
   historialDispositivos: HistorialDispositivo [] = [];
   constructor(private activatedRoute: ActivatedRoute,

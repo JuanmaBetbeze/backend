@@ -13,9 +13,10 @@ public class DispositivoNuevo {
     Long empleadoActual;
     String ejecutor;
     int estado;
+    String motivo;
 
     public DispositivoNuevo(Long id,String tipo, String numeroDeSerie, String modelo, String idDispo,String marca,
-                            Float valor, boolean asegurado,Long empleadoActual,String ejecutor,int estado) {
+                            Float valor, boolean asegurado,Long empleadoActual,String ejecutor,int estado,String motivo) {
         this.id=id;
         this.tipo = tipo;
         this.numeroDeSerie = numeroDeSerie;
@@ -27,6 +28,7 @@ public class DispositivoNuevo {
         this.empleadoActual=empleadoActual;
         this.ejecutor=ejecutor;
         this.estado=estado;
+        this.motivo=motivo;
     }
 
     public DispositivoNuevo() {
@@ -124,5 +126,13 @@ public class DispositivoNuevo {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 }

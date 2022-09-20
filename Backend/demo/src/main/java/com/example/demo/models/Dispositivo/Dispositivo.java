@@ -33,6 +33,7 @@ public class Dispositivo extends EntidadPersistente {
   )
   List<HistorialDispositivo> historialDispositivo= new ArrayList<>();
   String ejecutor;
+  String motivo;
   public Dispositivo(TipoDispositivoModel tipo, String numeroDeSerie, String modelo,String idDispo,
                      MarcaModel marca, Float valor, boolean asegurado,Empleado empleadoActual,String ejecutor) {
     this.tipo = tipo;
@@ -45,6 +46,7 @@ public class Dispositivo extends EntidadPersistente {
     this.empleadoActual = empleadoActual;
     this.ejecutor=ejecutor;
     this.estadoDispositivo=EstadoDispositivo.SINASIGNAR;
+    this.motivo="";
   }
 
   public Dispositivo() {
@@ -136,5 +138,13 @@ public class Dispositivo extends EntidadPersistente {
 
   public void setEstadoDispositivo(EstadoDispositivo estadoDispositivo) {
     this.estadoDispositivo = estadoDispositivo;
+  }
+
+  public String getMotivo() {
+    return motivo;
+  }
+
+  public void setMotivo(String motivo) {
+    this.motivo = motivo;
   }
 }
